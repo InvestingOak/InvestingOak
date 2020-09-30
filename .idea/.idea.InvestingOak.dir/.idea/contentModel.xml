@@ -271,6 +271,17 @@
           <e p="polyfills.ts" t="Include" />
           <e p="styles.scss" t="Include" />
           <e p="test.ts" t="Include" />
+          <e p="tradingview" t="Include">
+            <e p="mini-chart" t="Include">
+              <e p="mini-chart.component.html" t="Include" />
+              <e p="mini-chart.component.ts" t="Include" />
+            </e>
+            <e p="ticker-tape" t="Include">
+              <e p="ticker-tape.component.html" t="Include" />
+              <e p="ticker-tape.component.ts" t="Include" />
+            </e>
+            <e p="tradingview.module.ts" t="Include" />
+          </e>
         </e>
         <e p="tsconfig.app.json" t="Include" />
         <e p="tsconfig.json" t="Include" />
