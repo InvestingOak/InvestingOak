@@ -5,9 +5,12 @@
     <e p="C:\Users\Stephen\AppData\Local\JetBrains\Rider2020.2\resharper-host\Local\Transient\Rider\v202\SolutionCaches\_.19.00" t="ExcludeRecursive" />
     <e p="C:\Users\Stephen\AppData\Roaming\JetBrains\Rider2020.2\consoles\db" t="IncludeRecursive" />
     <e p="C:\Users\Stephen\AppData\Roaming\JetBrains\Rider2020.2\extensions" t="IncludeRecursive" />
+    <e p="C:\Users\Stephen\AppData\Roaming\JetBrains\Rider2020.2\javascript\extLibs\http_ajax.googleapis.com_ajax_libs_jquery_1.12.4_jquery.js" t="IncludeRecursive" />
+    <e p="C:\Users\Stephen\AppData\Roaming\JetBrains\Rider2020.2\javascript\extLibs\http_s3.tradingview.com_external-embedding_embed-widget-ticker-tape.js" t="IncludeRecursive" />
     <e p="C:\Users\Stephen\AppData\Roaming\JetBrains\Rider2020.2\scratches" t="IncludeRecursive" />
     <e p="F:\Source\git\InvestingOak" t="IncludeRecursive">
       <e p=".editorconfig" t="Include" />
+      <e p=".git\info\exclude" t="IncludeRecursive" />
       <e p=".gitignore" t="Include" />
       <e p="appsettings.Development.json" t="Include" />
       <e p="appsettings.json" t="Include" />
@@ -42,7 +45,14 @@
         <e p="node_modules\@angular-devkit\build-webpack" t="IncludeRecursive" />
         <e p="node_modules\@angular-devkit\core" t="IncludeRecursive" />
         <e p="node_modules\@angular-devkit\schematics" t="IncludeRecursive" />
+        <e p="node_modules\@fortawesome\angular-fontawesome" t="IncludeRecursive" />
+        <e p="node_modules\@fortawesome\fontawesome-common-types" t="IncludeRecursive" />
+        <e p="node_modules\@fortawesome\fontawesome-svg-core" t="IncludeRecursive" />
+        <e p="node_modules\@fortawesome\free-brands-svg-icons" t="IncludeRecursive" />
+        <e p="node_modules\@fortawesome\free-regular-svg-icons" t="IncludeRecursive" />
+        <e p="node_modules\@fortawesome\free-solid-svg-icons" t="IncludeRecursive" />
         <e p="node_modules\@jsdevtools\coverage-istanbul-loader" t="IncludeRecursive" />
+        <e p="node_modules\@ng-bootstrap\ng-bootstrap" t="IncludeRecursive" />
         <e p="node_modules\@ngtools\webpack" t="IncludeRecursive" />
         <e p="node_modules\@types" t="IncludeRecursive">
           <e p="jasmine" t="IncludeRecursive" />
@@ -55,10 +65,12 @@
         <e p="node_modules\aggregate-error" t="IncludeRecursive" />
         <e p="node_modules\ajv" t="IncludeRecursive" />
         <e p="node_modules\ajv-keywords" t="IncludeRecursive" />
+        <e p="node_modules\angular-fontawesome" t="IncludeRecursive" />
         <e p="node_modules\ansi-colors" t="IncludeRecursive" />
         <e p="node_modules\arg" t="IncludeRecursive" />
         <e p="node_modules\array-union" t="IncludeRecursive" />
         <e p="node_modules\blocking-proxy" t="IncludeRecursive" />
+        <e p="node_modules\bootstrap" t="IncludeRecursive" />
         <e p="node_modules\canonical-path" t="IncludeRecursive" />
         <e p="node_modules\chalk" t="IncludeRecursive" />
         <e p="node_modules\clean-stack" t="IncludeRecursive" />
@@ -69,8 +81,10 @@
         <e p="node_modules\commander" t="IncludeRecursive" />
         <e p="node_modules\del" t="IncludeRecursive" />
         <e p="node_modules\dependency-graph" t="IncludeRecursive" />
+        <e p="node_modules\es6-promise" t="IncludeRecursive" />
         <e p="node_modules\fast-deep-equal" t="IncludeRecursive" />
         <e p="node_modules\fast-json-stable-stringify" t="IncludeRecursive" />
+        <e p="node_modules\font-awesome" t="IncludeRecursive" />
         <e p="node_modules\globby" t="IncludeRecursive" />
         <e p="node_modules\hash.js" t="IncludeRecursive" />
         <e p="node_modules\ignore" t="IncludeRecursive" />
@@ -84,6 +98,7 @@
         <e p="node_modules\jasmine-core" t="IncludeRecursive" />
         <e p="node_modules\jasmine-spec-reporter" t="IncludeRecursive" />
         <e p="node_modules\jest-worker" t="IncludeRecursive" />
+        <e p="node_modules\jquery" t="IncludeRecursive" />
         <e p="node_modules\karma" t="IncludeRecursive" />
         <e p="node_modules\karma-chrome-launcher" t="IncludeRecursive" />
         <e p="node_modules\karma-coverage-istanbul-reporter" t="IncludeRecursive" />
@@ -95,6 +110,8 @@
         <e p="node_modules\make-dir" t="IncludeRecursive" />
         <e p="node_modules\make-error" t="IncludeRecursive" />
         <e p="node_modules\mimic-fn" t="IncludeRecursive" />
+        <e p="node_modules\moment" t="IncludeRecursive" />
+        <e p="node_modules\ng-bootstrap" t="IncludeRecursive" />
         <e p="node_modules\onetime" t="IncludeRecursive" />
         <e p="node_modules\open" t="IncludeRecursive" />
         <e p="node_modules\ora" t="IncludeRecursive" />
@@ -119,6 +136,59 @@
         <e p="node_modules\tslib" t="IncludeRecursive" />
         <e p="node_modules\tslint" t="IncludeRecursive" />
         <e p="node_modules\tsutils" t="IncludeRecursive" />
+        <e p="node_modules\typescript\lib\lib.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\typescript\lib\lib.dom.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\typescript\lib\lib.dom.iterable.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\typescript\lib\lib.es2015.collection.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\typescript\lib\lib.es2015.core.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\typescript\lib\lib.es2015.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\typescript\lib\lib.es2015.generator.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\typescript\lib\lib.es2015.iterable.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\typescript\lib\lib.es2015.promise.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\typescript\lib\lib.es2015.proxy.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\typescript\lib\lib.es2015.reflect.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\typescript\lib\lib.es2015.symbol.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\typescript\lib\lib.es2015.symbol.wellknown.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\typescript\lib\lib.es2016.array.include.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\typescript\lib\lib.es2016.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\typescript\lib\lib.es2016.full.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\typescript\lib\lib.es2017.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\typescript\lib\lib.es2017.full.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\typescript\lib\lib.es2017.intl.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\typescript\lib\lib.es2017.object.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\typescript\lib\lib.es2017.sharedmemory.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\typescript\lib\lib.es2017.string.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\typescript\lib\lib.es2017.typedarrays.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\typescript\lib\lib.es2018.asyncgenerator.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\typescript\lib\lib.es2018.asynciterable.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\typescript\lib\lib.es2018.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\typescript\lib\lib.es2018.full.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\typescript\lib\lib.es2018.intl.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\typescript\lib\lib.es2018.promise.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\typescript\lib\lib.es2018.regexp.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\typescript\lib\lib.es2019.array.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\typescript\lib\lib.es2019.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\typescript\lib\lib.es2019.full.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\typescript\lib\lib.es2019.object.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\typescript\lib\lib.es2019.string.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\typescript\lib\lib.es2019.symbol.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\typescript\lib\lib.es2020.bigint.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\typescript\lib\lib.es2020.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\typescript\lib\lib.es2020.full.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\typescript\lib\lib.es2020.intl.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\typescript\lib\lib.es2020.promise.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\typescript\lib\lib.es2020.string.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\typescript\lib\lib.es2020.symbol.wellknown.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\typescript\lib\lib.es5.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\typescript\lib\lib.es6.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\typescript\lib\lib.esnext.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\typescript\lib\lib.esnext.full.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\typescript\lib\lib.esnext.intl.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\typescript\lib\lib.esnext.promise.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\typescript\lib\lib.esnext.string.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\typescript\lib\lib.scripthost.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\typescript\lib\lib.webworker.d.ts" t="IncludeRecursive" />
+        <e p="node_modules\typescript\lib\lib.webworker.importscripts.d.ts" t="IncludeRecursive" />
         <e p="node_modules\uri-js" t="IncludeRecursive" />
         <e p="node_modules\webdriver-js-extender" t="IncludeRecursive" />
         <e p="node_modules\yn" t="IncludeRecursive" />
@@ -157,11 +227,36 @@
             </e>
           </e>
           <e p="app" t="Include">
+            <e p="adviser" t="Include">
+              <e p="adviser.component.html" t="Include" />
+              <e p="adviser.component.scss" t="Include" />
+              <e p="adviser.component.ts" t="Include" />
+            </e>
             <e p="app-routing.module.ts" t="Include" />
             <e p="app.component.html" t="Include" />
             <e p="app.component.scss" t="Include" />
             <e p="app.component.ts" t="Include" />
             <e p="app.module.ts" t="Include" />
+            <e p="home" t="Include">
+              <e p="home.component.html" t="Include" />
+              <e p="home.component.scss" t="Include" />
+              <e p="home.component.ts" t="Include" />
+            </e>
+            <e p="nav-menu" t="Include">
+              <e p="nav-menu.component.html" t="Include" />
+              <e p="nav-menu.component.scss" t="Include" />
+              <e p="nav-menu.component.ts" t="Include" />
+            </e>
+            <e p="news-feed" t="Include">
+              <e p="news-feed.component.html" t="Include" />
+              <e p="news-feed.component.scss" t="Include" />
+              <e p="news-feed.component.ts" t="Include" />
+            </e>
+            <e p="small-chart" t="Include">
+              <e p="small-chart.component.html" t="Include" />
+              <e p="small-chart.component.scss" t="Include" />
+              <e p="small-chart.component.ts" t="Include" />
+            </e>
           </e>
           <e p="assets" t="Include">
             <e p=".gitkeep" t="Include" />
@@ -176,6 +271,17 @@
           <e p="polyfills.ts" t="Include" />
           <e p="styles.scss" t="Include" />
           <e p="test.ts" t="Include" />
+          <e p="tradingview" t="Include">
+            <e p="mini-chart" t="Include">
+              <e p="mini-chart.component.html" t="Include" />
+              <e p="mini-chart.component.ts" t="Include" />
+            </e>
+            <e p="ticker-tape" t="Include">
+              <e p="ticker-tape.component.html" t="Include" />
+              <e p="ticker-tape.component.ts" t="Include" />
+            </e>
+            <e p="tradingview.module.ts" t="Include" />
+          </e>
         </e>
         <e p="tsconfig.app.json" t="Include" />
         <e p="tsconfig.json" t="Include" />
@@ -184,7 +290,6 @@
       </e>
       <e p="Controllers" t="Include">
         <e p="OidcConfigurationController.cs" t="Include" />
-        <e p="WeatherForecastController.cs" t="Include" />
       </e>
       <e p="Data" t="Include">
         <e p="ApplicationDbContext.cs" t="Include" />
@@ -221,7 +326,6 @@
       </e>
       <e p="README.md" t="Include" />
       <e p="Startup.cs" t="Include" />
-      <e p="WeatherForecast.cs" t="Include" />
       <e p="wwwroot" t="Include">
         <e p="favicon.ico" t="Include" />
       </e>

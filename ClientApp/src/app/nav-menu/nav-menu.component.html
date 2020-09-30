@@ -1,0 +1,34 @@
+<header>
+  <nav class="navbar navbar-light bg-light">
+    <div class="container d-flex">
+      <a class="navbar-brand" [routerLink]="['/']">
+        <span style="color:#93c47d;">Investing</span><span style="color:#d8b995;">Oak</span>
+      </a>
+
+      <form class="form-inline flex-grow-1 mr-sm-2">
+        <input class="form-control mr-sm-1 flex-fill" type="search"
+               placeholder="Search for a symbol or company" aria-label="Search">
+        <button class="btn btn-outline-secondary my-2 my-sm-0 w-auto" type="submit">Search</button>
+      </form>
+
+      <a [routerLink]="['login']">Sign in</a>
+    </div>
+    <ul class="container nav justify-content-start">
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/']">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['adviser']">Adviser</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['screener']">Screener</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['watchlist']">Watchlist</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['paper-trading']">Paper Trading</a>
+      </li>
+    </ul>
+  </nav>
+</header>
