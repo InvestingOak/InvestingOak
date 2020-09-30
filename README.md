@@ -12,9 +12,9 @@ Create copies of `appsettings.sample.json` and `appsettings.Development.sample.j
 and name them `appsettings.json` and `appsettings.Development.json`, respectively.
 
 Ensure you have a database instance running and paste the connection string in 
-`appsettings.json` and `appsettings.Development.json` (OptionSheetConnectionString value).
+`appsettings.json` and `appsettings.Development.json` (DefaultConnection value).
 
-A quick way to do this is to run `sqllocaldb create OptionSheet` and use the 
+A quick way to do this is to run `sqllocaldb create InvestingOak` and use the 
 connection strings provided in the `appsettings.json` files.
 
 #### Running the Client
