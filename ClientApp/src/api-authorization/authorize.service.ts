@@ -11,6 +11,12 @@ export type IAuthenticationResult =
   FailureAuthenticationResult |
   RedirectAuthenticationResult;
 
+export enum AuthenticationResultStatus {
+  Success,
+  Redirect,
+  Fail
+}
+
 export interface SuccessAuthenticationResult {
   status: AuthenticationResultStatus.Success;
   state: any;
@@ -23,12 +29,6 @@ export interface FailureAuthenticationResult {
 
 export interface RedirectAuthenticationResult {
   status: AuthenticationResultStatus.Redirect;
-}
-
-export enum AuthenticationResultStatus {
-  Success,
-  Redirect,
-  Fail
 }
 
 export interface IUser {
