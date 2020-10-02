@@ -1,4 +1,6 @@
-﻿# InvestingOak
+﻿[![Build Status](https://travis-ci.com/InvestingOak/InvestingOak.svg?branch=master)](https://travis-ci.com/InvestingOak/InvestingOak)
+
+# InvestingOak
 
 ## Running
 
