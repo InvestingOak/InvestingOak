@@ -8,9 +8,11 @@ import { mergeMap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class AuthorizeInterceptor implements HttpInterceptor {
-  constructor(private authorize: AuthorizeService) { }
 
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+  public constructor(private authorize: AuthorizeService) { }
+
+  /* eslint-disable @typescript-eslint/no-explicit-any */
+  public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return this.authorize.getAccessToken()
       .pipe(mergeMap(token => this.processRequestWithToken(token, req, next)));
   }
@@ -43,7 +45,8 @@ export class AuthorizeInterceptor implements HttpInterceptor {
     }
 
     // It's a relative url like /api/Products
-    if (/^\/[^\/].*/.test(req.url)) {
+    // NOTE: removed escape before / (was /^\/[^\/].*/)
+    if (/^\/[^/].*/.test(req.url)) {
       return true;
     }
 
