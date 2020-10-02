@@ -6,11 +6,6 @@ import { BehaviorSubject, concat, from, Observable } from 'rxjs';
 import { filter, map, mergeMap, take, tap } from 'rxjs/operators';
 import { ApplicationPaths, ApplicationName } from './api-authorization.constants';
 
-export type IAuthenticationResult =
-  SuccessAuthenticationResult |
-  FailureAuthenticationResult |
-  RedirectAuthenticationResult;
-
 export enum AuthenticationResultStatus {
   Success,
   Redirect,
@@ -30,6 +25,11 @@ export interface FailureAuthenticationResult {
 export interface RedirectAuthenticationResult {
   status: AuthenticationResultStatus.Redirect;
 }
+
+export type IAuthenticationResult =
+  SuccessAuthenticationResult |
+  FailureAuthenticationResult |
+  RedirectAuthenticationResult;
 
 export interface IUser {
   name?: string;
