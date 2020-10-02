@@ -4,7 +4,8 @@ import { Component, OnInit } from '@angular/core';
 import { AuthorizeService, AuthenticationResultStatus } from '../authorize.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
-import { LoginActions, QueryParameterNames, ApplicationPaths, ReturnUrlType } from '../api-authorization.constants';
+import { LoginActions, QueryParameterNames, ApplicationPaths } from '../api-authorization.constants';
+import {NavigationState} from '../navigation-state';
 
 // The main responsibility of this component is to handle the user's login process.
 // This is the starting point for the login process. Any component that needs to authenticate
@@ -50,7 +51,7 @@ export class LoginComponent implements OnInit {
 
 
   private async login(returnUrl: string): Promise<void> {
-    const state: INavigationState = { returnUrl };
+    const state: NavigationState = { returnUrl };
     const result = await this.authorizeService.signIn(state);
     this.message.next(undefined);
     switch (result.status) {
@@ -102,8 +103,8 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  private getReturnUrl(state?: INavigationState): string {
-    const fromQuery = (this.activatedRoute.snapshot.queryParams as INavigationState).returnUrl;
+  private getReturnUrl(state?: NavigationState): string {
+    const fromQuery = (this.activatedRoute.snapshot.queryParams as NavigationState).returnUrl;
     // If the url is coming from the query string, check that is either
     // a relative url or an absolute url
     // NOTE: removed escape before / (was /\/[^\/].*/)
@@ -125,8 +126,4 @@ export class LoginComponent implements OnInit {
     const redirectUrl = `${window.location.origin}/${apiAuthorizationPath}`;
     window.location.replace(redirectUrl);
   }
-}
-
-interface INavigationState {
-  [ReturnUrlType]: string;
 }

@@ -3,7 +3,8 @@ import { AuthenticationResultStatus, AuthorizeService } from '../authorize.servi
 import { BehaviorSubject } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { take } from 'rxjs/operators';
-import { LogoutActions, ApplicationPaths, ReturnUrlType } from '../api-authorization.constants';
+import { LogoutActions, ApplicationPaths } from '../api-authorization.constants';
+import {NavigationState} from '../navigation-state';
 
 // The main responsibility of this component is to handle the user's logout process.
 // This is the starting point for the logout process, which is usually initiated when a
@@ -46,11 +47,11 @@ export class LogoutComponent implements OnInit {
   }
 
   private async logout(returnUrl: string): Promise<void> {
-    const state: INavigationState = { returnUrl };
-    const isauthenticated = await this.authorizeService.isAuthenticated().pipe(
+    const state: NavigationState = { returnUrl };
+    const isAuthenticated = await this.authorizeService.isAuthenticated().pipe(
       take(1)
     ).toPromise();
-    if (isauthenticated) {
+    if (isAuthenticated) {
       const result = await this.authorizeService.signOut(state);
       switch (result.status) {
         case AuthenticationResultStatus.Redirect:
@@ -94,8 +95,8 @@ export class LogoutComponent implements OnInit {
     });
   }
 
-  private getReturnUrl(state?: INavigationState): string {
-    const fromQuery = (this.activatedRoute.snapshot.queryParams as INavigationState).returnUrl;
+  private getReturnUrl(state?: NavigationState): string {
+    const fromQuery = (this.activatedRoute.snapshot.queryParams as NavigationState).returnUrl;
     // If the url is coming from the query string, check that is either
     // a relative url or an absolute url
     // NOTE: removed escape before / (was /\/[^\/].*/) (eslint)
@@ -109,8 +110,4 @@ export class LogoutComponent implements OnInit {
       fromQuery ||
       ApplicationPaths.LoggedOut;
   }
-}
-
-interface INavigationState {
-  [ReturnUrlType]: string;
 }
