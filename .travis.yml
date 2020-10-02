@@ -7,9 +7,14 @@ language: csharp
 mono: none
 os: linux
 dist: xenial
-dotnet: 5.0
+addons:
+  snaps:
+    - name: dotnet-sdk
+      confinement: classic
+      channel: latest/beta
 solution: InvestingOak.sln
 script:
+  - sudo snap alias dotnet-sdk.dotnet dotnet
   - dotnet restore
   - dotnet build
   - dotnet test
