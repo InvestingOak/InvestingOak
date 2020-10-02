@@ -10,7 +10,7 @@ dist: xenial
 addons:
   snaps:
     - name: dotnet-sdk
-      confinement: classic
+      classic: true
       channel: latest/beta
 solution: InvestingOak.sln
 script:
