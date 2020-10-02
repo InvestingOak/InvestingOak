@@ -12,6 +12,7 @@
       <e p=".editorconfig" t="Include" />
       <e p=".git\info\exclude" t="IncludeRecursive" />
       <e p=".gitignore" t="Include" />
+      <e p=".travis.yml" t="Include" />
       <e p="appsettings.Development.json" t="Include" />
       <e p="appsettings.json" t="Include" />
       <e p="bin" t="ExcludeRecursive" />
@@ -20,6 +21,18 @@
         <e p=".editorconfig" t="Include" />
         <e p=".gitignore" t="Include" />
         <e p="angular.json" t="Include" />
+        <e p="dist" t="Include">
+          <e p="investing-oak" t="Include">
+            <e p="3rdpartylicenses.txt" t="Include" />
+            <e p="favicon.ico" t="Include" />
+            <e p="index.html" t="Include" />
+            <e p="main.523452e8b45d0a764878.js" t="Include" />
+            <e p="polyfills.35a5ca1855eb057f016a.js" t="Include" />
+            <e p="runtime.acf0dec4155e77772545.js" t="Include" />
+            <e p="scripts.0e4e26d85318452dd239.js" t="Include" />
+            <e p="styles.13ac0f59df04a3c8af62.css" t="Include" />
+          </e>
+        </e>
         <e p="e2e" t="Include">
           <e p="protractor.conf.js" t="Include" />
           <e p="src" t="Include">
