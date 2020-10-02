@@ -1,3 +1,4 @@
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/0cda63a48acd40c9b4332b4995e6194b)](https://app.codacy.com/gh/InvestingOak/InvestingOak?utm_source=github.com&utm_medium=referral&utm_content=InvestingOak/InvestingOak&utm_campaign=Badge_Grade)
 ﻿[![Build Status](https://travis-ci.com/InvestingOak/InvestingOak.svg?branch=master)](https://travis-ci.com/InvestingOak/InvestingOak)
 
 # InvestingOak
