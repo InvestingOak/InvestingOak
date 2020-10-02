@@ -14,18 +14,20 @@ import { LogoutActions, ApplicationPaths, ReturnUrlType } from '../api-authoriza
   styleUrls: ['./logout.component.css']
 })
 export class LogoutComponent implements OnInit {
-  public message = new BehaviorSubject<string>(null);
 
-  constructor(
+  public message: BehaviorSubject<string> = new BehaviorSubject<string>(null);
+
+  public constructor(
     private authorizeService: AuthorizeService,
     private activatedRoute: ActivatedRoute,
     private router: Router) { }
 
-  async ngOnInit() {
+  public async ngOnInit(): Promise<void> {
     const action = this.activatedRoute.snapshot.url[1];
     switch (action.path) {
       case LogoutActions.Logout:
-        if (!!window.history.state.local) {
+        // NOTE: removed redundant double negation (eslint)
+        if (!window.history.state.local) {
           await this.logout(this.getReturnUrl());
         } else {
           // This prevents regular links to <app>/authentication/logout from triggering a logout
@@ -97,9 +99,10 @@ export class LogoutComponent implements OnInit {
     const fromQuery = (this.activatedRoute.snapshot.queryParams as INavigationState).returnUrl;
     // If the url is coming from the query string, check that is either
     // a relative url or an absolute url
+    // NOTE: removed escape before / (was /\/[^\/].*/) (eslint)
     if (fromQuery &&
       !(fromQuery.startsWith(`${window.location.origin}/`) ||
-        /\/[^\/].*/.test(fromQuery))) {
+        /\/[^/].*/.test(fromQuery))) {
       // This is an extra check to prevent open redirects.
       throw new Error('Invalid return url. The return url needs to have the same origin as the current page.');
     }

@@ -1,8 +1,8 @@
 import {AfterViewInit, Component, ElementRef, Inject, Input} from '@angular/core';
-import {DOCUMENT} from "@angular/common";
+import {DOCUMENT} from '@angular/common';
 
 @Component({
-  selector: 'tradingview-mini-chart',
+  selector: 'app-mini-chart',
   templateUrl: './mini-chart.component.html'
 })
 export class MiniChartComponent implements AfterViewInit {
@@ -10,21 +10,21 @@ export class MiniChartComponent implements AfterViewInit {
   @Input()
   public symbol: string;
 
-  constructor(@Inject(DOCUMENT) private document: Document, private elementRef: ElementRef) { }
+  public constructor(@Inject(DOCUMENT) private document: Document, private elementRef: ElementRef) { }
 
-  public ngAfterViewInit() {
+  public ngAfterViewInit(): void {
     const params = {
-      "symbol": this.symbol,
-      "width": "100%",
-      "height": "100%",
-      "locale": "en",
-      "dateRange": "1D",
-      "colorTheme": "light",
-      "trendLineColor": "rgba(106, 168, 79, 1)",
-      "underLineColor": "rgba(182, 215, 168, 1)",
-      "isTransparent": false,
-      "autosize": true,
-      "largeChartUrl": ""
+      symbol: this.symbol,
+      width: '100%',
+      height: '100%',
+      locale: 'en',
+      dateRange: '1D',
+      colorTheme: 'light',
+      trendLineColor: 'rgba(106, 168, 79, 1)',
+      underLineColor: 'rgba(182, 215, 168, 1)',
+      isTransparent: false,
+      autosize: true,
+      largeChartUrl: ''
     };
 
     const script = this.document.createElement('script');

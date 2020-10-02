@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { Component, OnInit } from '@angular/core';
 import { AuthorizeService, AuthenticationResultStatus } from '../authorize.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -14,14 +16,15 @@ import { LoginActions, QueryParameterNames, ApplicationPaths, ReturnUrlType } fr
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  public message = new BehaviorSubject<string>(null);
 
-  constructor(
+  public message: BehaviorSubject<string> = new BehaviorSubject<string>(null);
+
+  public constructor(
     private authorizeService: AuthorizeService,
     private activatedRoute: ActivatedRoute,
     private router: Router) { }
 
-  async ngOnInit() {
+  public async ngOnInit(): Promise<void> {
     const action = this.activatedRoute.snapshot.url[1];
     switch (action.path) {
       case LoginActions.Login:
@@ -30,10 +33,11 @@ export class LoginComponent implements OnInit {
       case LoginActions.LoginCallback:
         await this.processLoginCallback();
         break;
-      case LoginActions.LoginFailed:
+      case LoginActions.LoginFailed: {
         const message = this.activatedRoute.snapshot.queryParamMap.get(QueryParameterNames.Message);
         this.message.next(message);
         break;
+      }
       case LoginActions.Profile:
         this.redirectToProfile();
         break;
@@ -103,9 +107,10 @@ export class LoginComponent implements OnInit {
     const fromQuery = (this.activatedRoute.snapshot.queryParams as INavigationState).returnUrl;
     // If the url is coming from the query string, check that is either
     // a relative url or an absolute url
+    // NOTE: removed escape before / (was /\/[^\/].*/)
     if (fromQuery &&
       !(fromQuery.startsWith(`${window.location.origin}/`) ||
-        /\/[^\/].*/.test(fromQuery))) {
+        /\/[^/].*/.test(fromQuery))) {
       // This is an extra check to prevent open redirects.
       throw new Error('Invalid return url. The return url needs to have the same origin as the current page.');
     }
