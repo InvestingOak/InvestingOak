@@ -4,11 +4,11 @@
     - dev
 
 language: csharp
-sudo: required
 mono: none
-dist: focal
+os: linux
+dist: xenial
 dotnet: 5.0
-soluton: InvestingOak.sln
+solution: InvestingOak.sln
 script:
   - dotnet restore
   - dotnet build
