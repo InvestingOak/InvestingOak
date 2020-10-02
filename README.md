@@ -3,6 +3,12 @@
 
 # InvestingOak
 
+InvestingOak provides trade suggestions to users based on questions about their risk tolerance, 
+buy/sell ratings, and other factors. InvestingOak will also provide users with real-time stock 
+market data. Users will be able to search for information quickly and see relevant news at a 
+glance with our simple, intuitive, and easy-to-use interface. The ultimate goal is to make 
+finding trade ideas as simple and digestible as possible for beginning investors.
+
 ## Running
 
 ### Installing Tools
