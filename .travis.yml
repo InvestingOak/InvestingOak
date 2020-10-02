@@ -1,0 +1,23 @@
+﻿branches:
+  only:
+    - master
+    - dev
+
+language: csharp
+sudo: required
+mono: none
+dist: focal
+dotnet: 5.0
+soluton: InvestingOak.sln
+script:
+  - dotnet restore
+  - dotnet build
+  - dotnet test
+  - cd ClientApp
+  - npm install -g @angular/cli
+  - ng lint
+  - ng build --prod
+env:
+  global:
+    - DOTNET_SKIP_FIRST_TIME_EXPERIENCE=true
+    - DOTNET_CLI_TELEMETRY_OPTOUT=1
