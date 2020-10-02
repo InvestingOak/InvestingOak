@@ -12,6 +12,7 @@
       <e p=".editorconfig" t="Include" />
       <e p=".git\info\exclude" t="IncludeRecursive" />
       <e p=".gitignore" t="Include" />
+      <e p="app.db" t="Include" />
       <e p="appsettings.Development.json" t="Include" />
       <e p="appsettings.json" t="Include" />
       <e p="bin" t="ExcludeRecursive" />
@@ -294,8 +295,8 @@
       <e p="Data" t="Include">
         <e p="ApplicationDbContext.cs" t="Include" />
         <e p="Migrations" t="Include">
-          <e p="00000000000000_CreateIdentitySchema.cs" t="Include" />
-          <e p="00000000000000_CreateIdentitySchema.Designer.cs" t="Include" />
+          <e p="20201002155412_InitialCreate.cs" t="Include" />
+          <e p="20201002155412_InitialCreate.Designer.cs" t="Include" />
           <e p="ApplicationDbContextModelSnapshot.cs" t="Include" />
         </e>
       </e>
