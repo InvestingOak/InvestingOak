@@ -4,12 +4,12 @@
 
 ## Running
 
-#### Installing Tools
+### Installing Tools
 
 Make sure you have the [.NET 5.0 SDK](https://dotnet.microsoft.com/download/dotnet/5.0) and 
 [npm](https://www.npmjs.com/get-npm) installed.
 
-#### Running the Client
+### Running the Client
 
 The Angular client needs to run before the server. In the "ClientApp" directory, 
 run `npm start` to start the client development server and install dependencies.
@@ -17,12 +17,12 @@ run `npm start` to start the client development server and install dependencies.
 In production, the client is precompiled and served by ASP.NET and this step is 
 not necessary.
 
-#### Running the Server
+### Running the Server
 
 Back in the project root, run `dotnet run`. This will install dependencies for the 
 server and run.
 
-#### Accessing the Site
+### Accessing the Site
 
 In development, the site can be accessed on `https://localhost:5001`. If running the client 
 only, use `http://localhost:4200`.
