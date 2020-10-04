@@ -5,3 +5,7 @@
     text-decoration: underline;
   }
 }
+
+nav .nav-item:first-child > .nav-link {
+  padding-left: 0;
+}

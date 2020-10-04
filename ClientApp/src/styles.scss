@@ -14,3 +14,16 @@ a {
     color: $accent-color;
   }
 }
+
+// Themes
+.invert {
+  filter: invert(1) hue-rotate(180deg);
+}
+
+.dark-mode {
+  @extend .invert;
+
+  img, picture, video {
+    @extend .invert;
+  }
+}
