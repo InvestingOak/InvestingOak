@@ -16,7 +16,7 @@ export class ThemeSelectorComponent implements OnInit {
   public faThemeIcon = faMoon;
   public theme: Theme = Theme.Light;
 
-  public get themeText() {
+  public get themeText(): string {
     switch (this.theme) {
       case Theme.Light:
         return "light";
@@ -33,7 +33,7 @@ export class ThemeSelectorComponent implements OnInit {
     }
   }
 
-  public setTheme(theme: Theme) {
+  public setTheme(theme: Theme): void {
     if (theme === Theme.Light) {
       document.documentElement.classList.remove('dark-mode');
       document.querySelectorAll('.inverted').forEach(result => {
@@ -54,7 +54,7 @@ export class ThemeSelectorComponent implements OnInit {
     }
   }
 
-  public onThemeToggle() {
+  public onThemeToggle(): void {
     switch (this.theme) {
       case Theme.Light:
         this.setTheme(Theme.Dark);
