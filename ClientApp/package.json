@@ -5,7 +5,8 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "lint": "npx eslint . --ext .js,.jsx,.ts,.tsx"
+    "lint": "npx eslint . --ext .js,.jsx,.ts,.tsx",
+    "test": ""
   },
   "private": true,
   "dependencies": {
