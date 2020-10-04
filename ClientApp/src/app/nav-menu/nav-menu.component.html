@@ -11,24 +11,31 @@
         <button class="btn btn-outline-secondary my-2 my-sm-0 w-auto" type="submit">Search</button>
       </form>
 
-      <a [routerLink]="['login']">Sign in</a>
+      <div class="user-menu">
+        <a [routerLink]="['login']">Sign in</a>
+      </div>
+
+      <app-theme-selector class="pl-2"></app-theme-selector>
     </div>
-    <ul class="container nav justify-content-start">
-      <li class="nav-item">
-        <a class="nav-link" [routerLink]="['/']">Home</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" [routerLink]="['adviser']">Adviser</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" [routerLink]="['screener']">Screener</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" [routerLink]="['watchlist']">Watchlist</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" [routerLink]="['paper-trading']">Paper Trading</a>
-      </li>
-    </ul>
+
+    <div class="container">
+      <ul class="nav justify-content-start">
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/']">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['adviser']">Adviser</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['screener']">Screener</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['watchlist']">Watchlist</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['paper-trading']">Paper Trading</a>
+        </li>
+      </ul>
+    </div>
   </nav>
 </header>
