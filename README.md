@@ -26,7 +26,7 @@ not necessary.
 
 ### Running the Server
 
-Back in the project root, run `dotnet run`. This will install dependencies for the 
+Back in the project root, run `dotnet restore` then `dotnet run`. This will install dependencies for the 
 server and run.
 
 ### Accessing the Site
