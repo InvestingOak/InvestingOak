@@ -19,7 +19,7 @@ Make sure you have the [.NET 5.0 SDK](https://dotnet.microsoft.com/download/dotn
 ### Running the Client
 
 The Angular client needs to run before the server. In the "ClientApp" directory, 
-run `npm start` to start the client development server and install dependencies.
+run `npm install` then `npm start` to start the client development server and install dependencies.
 
 In production, the client is precompiled and served by ASP.NET and this step is 
 not necessary.
