@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace InvestingOak.Models
+namespace InvestingOak.Data
 {
     public class ApplicationUser : IdentityUser
     {
