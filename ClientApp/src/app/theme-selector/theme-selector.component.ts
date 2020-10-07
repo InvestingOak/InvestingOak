@@ -26,9 +26,8 @@ export class ThemeSelectorComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    const themeText = localStorage.getItem('theme');
-    if (themeText) {
-      const theme = themeText === 'light' ? Theme.Light : Theme.Dark;
+    const theme = JSON.parse(localStorage.getItem('theme'));
+    if (theme) {
       this.setTheme(theme);
     }
   }
@@ -39,19 +38,18 @@ export class ThemeSelectorComponent implements OnInit {
       document.querySelectorAll('.inverted').forEach(result => {
         result.classList.remove('invert');
       });
-      localStorage.setItem('theme', 'light');
       this.faThemeIcon = faMoon;
-      this.theme = Theme.Light;
     }
     else {
       document.documentElement.classList.add('dark-mode');
       document.querySelectorAll('.inverted').forEach(result => {
         result.classList.add('invert');
       });
-      localStorage.setItem('theme', 'dark');
       this.faThemeIcon = faSun;
-      this.theme = Theme.Dark;
     }
+
+    localStorage.setItem('theme', JSON.stringify(theme));
+    this.theme = theme;
   }
 
   public onThemeToggle(): void {
