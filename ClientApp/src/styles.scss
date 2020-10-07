@@ -1,17 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
 
-// Variables
-$accent-color: #6aa84f;
+@use "colors";
 
 a {
-  color: $accent-color;
+  color: colors.$accent-color;
 
   &:hover {
-    color: $accent-color;
+    color: colors.$accent-color;
   }
 
   &:visited {
-    color: $accent-color;
+    color: colors.$accent-color;
   }
 }
 
