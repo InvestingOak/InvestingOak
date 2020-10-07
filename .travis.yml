@@ -1,7 +1,3 @@
-﻿branches:
-  only:
-    - master
-
 language: csharp
 mono: none
 os: linux
