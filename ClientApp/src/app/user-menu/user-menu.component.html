@@ -1,0 +1,32 @@
+<!-- User links -->
+<div *ngIf="isAuthenticated | async" class="ml-2">
+  <div class="dropdown d-inline ml-1">
+    <span class="dropdown-toggle" role="button" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      {{userName | async}}
+    </span>
+    <div class="dropdown-menu" aria-labelledby="userDropdown">
+      <a class="dropdown-item" [routerLink]='["/authentication/profile"]' title="Profile">Profile</a>
+      <a class="dropdown-item" [routerLink]="['settings']" title="Settings">Settings</a>
+      <div class="dropdown-divider"></div>
+      <a class="dropdown-item" [routerLink]="['/authentication/logout']" title="Sign out">Sign out</a>
+    </div>
+  </div>
+</div>
+
+<!-- Login and Register -->
+<div *ngIf="(isAuthenticated | async) === false">
+  <ul class="navbar nav p-0">
+    <li
+      class="nav-item"
+      [routerLinkActive]="['link-active']"
+      [routerLinkActiveOptions]="{ exact: true }">
+      <a class="nav-link text-dark" [routerLink]="['/authentication/login']" title="Sign in">Sign in</a>
+    </li>
+    <li
+      class="nav-item"
+      [routerLinkActive]="['link-active']"
+      [routerLinkActiveOptions]="{ exact: true }">
+      <a class="nav-link btn btn-outline-secondary p-1" [routerLink]="['/authentication/register']" title="Sign up">Sign up</a>
+    </li>
+  </ul>
+</div>

@@ -5,15 +5,17 @@
         <span style="color:#93c47d;">Investing</span><span style="color:#d8b995;">Oak</span>
       </a>
 
-      <form class="form-inline flex-grow-1 mr-sm-2">
-        <input class="form-control mr-sm-1 flex-fill" type="search"
-               placeholder="Search for a symbol or company" aria-label="Search">
-        <button class="btn btn-outline-secondary my-2 my-sm-0 w-auto" type="submit">Search</button>
+      <form class="form-inline flex-grow-1">
+        <div class="input-group flex-fill">
+          <input class="form-control" type="search"
+                 placeholder="Search for a symbol or company" aria-label="Search">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="submit"><fa-icon [icon]="search"></fa-icon></button>
+          </div>
+        </div>
       </form>
 
-      <div class="user-menu">
-        <a [routerLink]="['login']">Sign in</a>
-      </div>
+      <app-user-menu></app-user-menu>
 
       <app-theme-selector class="pl-2"></app-theme-selector>
     </div>
@@ -33,7 +35,7 @@
           <a class="nav-link" [routerLink]="['watchlist']">Watchlist</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" [routerLink]="['paper-trading']">Paper Trading</a>
+          <a class="nav-link" [routerLink]="['paper']">Paper Trading</a>
         </li>
       </ul>
     </div>
