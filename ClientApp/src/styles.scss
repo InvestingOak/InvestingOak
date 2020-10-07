@@ -26,3 +26,15 @@ a {
     @extend .invert;
   }
 }
+
+.sidebar {
+  height: calc(100vh - 56px);
+}
+
+.h-66 {
+  height: 66%;
+}
+
+.w-66 {
+  width: 66%;
+}
