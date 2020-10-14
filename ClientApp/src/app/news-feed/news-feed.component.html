@@ -1,50 +1,11 @@
 <div id="news" class="mt-3">
-    <a class="news-block d-inline-block mb-3">
-      <img class="news-thumbnail float-left pr-3" src="https://s.yimg.com/it/api/res/1.2/ltD0FFYSjbg5lS0rEZCSGg--~A/YXBwaWQ9eW5ld3M7c209MTt3PTgwMA--/https://media.zenfs.com/en/bloomberg_markets_842/b412ede87a1db179725c0d8a34655faf">
-      <div>
-        <h5>U.S. Stock Futures Slip After Presidential Debate: Market Wrap</h5>
-          <p>(Bloomberg) -- U.S. equity-index futures dropped alongside most stock markets after an
-            acrimonious American presidential debate highlighted the risk of a contested vote in...</p>
-      </div>
-    </a>
-    <a class="news-block d-inline-block mb-3">
-      <img class="news-thumbnail float-left pr-3"
-           src="https://s.yimg.com/it/api/res/1.2/ltD0FFYSjbg5lS0rEZCSGg--~A/YXBwaWQ9eW5ld3M7c209MTt3PTgwMA--/https://media.zenfs.com/en/bloomberg_markets_842/b412ede87a1db179725c0d8a34655faf">
-      <div>
-        <h5>U.S. Stock Futures Slip After Presidential Debate: Market Wrap</h5>
-          <p>(Bloomberg) -- U.S. equity-index futures dropped alongside most stock markets after an
-            acrimonious American presidential debate highlighted the risk of a contested vote in...
-          </p>
-      </div>
-    </a>
-    <a class="news-block d-inline-block mb-3">
-      <img class="news-thumbnail float-left pr-3"
-           src="https://s.yimg.com/it/api/res/1.2/ltD0FFYSjbg5lS0rEZCSGg--~A/YXBwaWQ9eW5ld3M7c209MTt3PTgwMA--/https://media.zenfs.com/en/bloomberg_markets_842/b412ede87a1db179725c0d8a34655faf">
-      <div>
-        <h5>U.S. Stock Futures Slip After Presidential Debate: Market Wrap</h5>
-          <p>(Bloomberg) -- U.S. equity-index futures dropped alongside most stock markets after an
-            acrimonious American presidential debate highlighted the risk of a contested vote in...
-          </p>
-      </div>
-    </a>
-    <a class="news-block d-inline-block mb-3">
-      <img class="news-thumbnail float-left pr-3"
-           src="https://s.yimg.com/it/api/res/1.2/ltD0FFYSjbg5lS0rEZCSGg--~A/YXBwaWQ9eW5ld3M7c209MTt3PTgwMA--/https://media.zenfs.com/en/bloomberg_markets_842/b412ede87a1db179725c0d8a34655faf">
-      <div>
-        <h5>U.S. Stock Futures Slip After Presidential Debate: Market Wrap</h5>
-          <p>(Bloomberg) -- U.S. equity-index futures dropped alongside most stock markets after an
-            acrimonious American presidential debate highlighted the risk of a contested vote in...
-          </p>
-      </div>
-    </a>
-    <a class="news-block d-inline-block mb-3">
-      <img class="news-thumbnail float-left pr-3"
-           src="https://s.yimg.com/it/api/res/1.2/ltD0FFYSjbg5lS0rEZCSGg--~A/YXBwaWQ9eW5ld3M7c209MTt3PTgwMA--/https://media.zenfs.com/en/bloomberg_markets_842/b412ede87a1db179725c0d8a34655faf">
-      <div>
-        <h5>U.S. Stock Futures Slip After Presidential Debate: Market Wrap</h5>
-          <p>(Bloomberg) -- U.S. equity-index futures dropped alongside most stock markets after an
-            acrimonious American presidential debate highlighted the risk of a contested vote in...
-          </p>
-      </div>
-    </a>
-  </div>
+  <h4 class="display-5">Market News</h4>
+  <a *ngFor="let article of marketNews | async" class="news-block d-inline-block mb-3" href="{{article.url}}">
+    <hr class="mt-0">
+    <img class="news-thumbnail float-left pr-3" src="{{article.image}}" alt="{{article.headline}}">
+    <div>
+      <h5>({{article.source}}) {{article.headline}}</h5>
+      <p>{{article.summary}}</p>
+    </div>
+  </a>
+</div>

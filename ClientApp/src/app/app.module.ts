@@ -12,6 +12,7 @@ import { AdviserComponent } from './adviser/adviser.component';
 import { TradingViewModule } from '../tradingview/tradingview.module';
 import { ThemeSelectorComponent } from './theme-selector/theme-selector.component';
 import { UserMenuComponent } from './user-menu/user-menu.component';
+import { FinnhubService } from '../finnhub/finnhub.service';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,9 @@ import { UserMenuComponent } from './user-menu/user-menu.component';
     NgbModule,
     TradingViewModule,
   ],
-  providers: [],
+  providers: [
+    FinnhubService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
