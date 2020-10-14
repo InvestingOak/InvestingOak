@@ -32,3 +32,38 @@ export interface News {
   summary: string;
   url: string
 }
+
+export interface NewsSentiment {
+  buzz: {
+    articlesInLastWeek: number;
+    buzz: number;
+    weeklyAverage: number
+  };
+  companyNewsScore: number;
+  sectorAverageBullishPercent: number;
+  sectorAverageNewsScore: number;
+  sentiment: {
+    bearishPercent: number;
+    bullishPercent: number
+  };
+  symbol: string
+}
+
+export interface RecommendationTrend {
+  buy: number;
+  hold: number;
+  period: Date;
+  sell: number;
+  strongBuy: number;
+  strongSell: number;
+  symbol: string;
+}
+
+export interface PriceTarget {
+  lastUpdated: Date;
+  symbol: string;
+  targetHigh: number;
+  targetLow: number;
+  targetMean: number;
+  targetMedian: number;
+}

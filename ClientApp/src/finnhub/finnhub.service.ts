@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {CompanyProfile2, News, StockSymbol} from './responses';
+import {CompanyProfile2, News, NewsSentiment, PriceTarget, RecommendationTrend, StockSymbol} from './responses';
 
 @Injectable({
   providedIn: 'root'
@@ -51,5 +51,41 @@ export class FinnhubService {
    */
   public companyNews(symbol: string, from: string, to: string): Observable<News[]> {
     return this.http.get<News[]>(`${this.baseUrl}/company-news?symbol=${symbol}&from=${from}&to=${to}&token=${this.apiKey}`);
+  }
+
+  /**
+   * Get company's news sentiment and statistics. This endpoint is only available for US companies.
+   * https://finnhub.io/docs/api#news-sentiment
+   * @param symbol Company symbol.
+   */
+  public newsSentiment(symbol: string): Observable<NewsSentiment> {
+    return this.http.get<NewsSentiment>(`${this.baseUrl}/news-sentiment?symbol=${symbol}&token=${this.apiKey}`);
+  }
+
+  /**
+   * Get company peers. Return a list of peers in the same country and GICS sub-industry
+   * https://finnhub.io/docs/api#company-peers
+   * @param symbol Company symbol.
+   */
+  public peers(symbol: string): Observable<string[]> {
+    return this.http.get<string[]>(`${this.baseUrl}/stock/peers?symbol${symbol}&token=${this.apiKey}`);
+  }
+
+  /**
+   * Get latest analyst recommendation trends for a company.
+   * https://finnhub.io/docs/api#recommendation-trends
+   * @param symbol Company symbol.
+   */
+  public recommendationTrends(symbol: string): Observable<RecommendationTrend[]> {
+    return this.http.get<RecommendationTrend[]>(`${this.baseUrl}/stock/recommendation?symbol=${symbol}&token=${this.apiKey}`);
+  }
+
+  /**
+   * Get latest price target consensus.
+   * https://finnhub.io/docs/api#price-target
+   * @param symbol Company symbol.
+   */
+  public priceTarget(symbol: string): Observable<PriceTarget> {
+    return this.http.get<PriceTarget>(`${this.baseUrl}/stock/price-target?symbol=${symbol}&token=${this.apiKey}`);
   }
 }
