@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {CompanyProfile2, News} from './responses';
+import {CompanyProfile2, News, StockSymbol} from './responses';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +21,15 @@ export class FinnhubService {
    */
   public companyProfile2(idType: 'symbol' | 'isin' | 'cusip' , value: string): Observable<CompanyProfile2> {
     return this.http.get<CompanyProfile2>(`${this.baseUrl}/stock/profile2?${idType}=${value}&token=${this.apiKey}`);
+  }
+
+  /**
+   * List supported stocks.
+   * https://finnhub.io/docs/api#stock-symbols
+   * @param exchange Exchange you want to get the list of symbols from.
+   */
+  public symbols(exchange: string): Observable<StockSymbol[]> {
+    return this.http.get<StockSymbol[]>(`${this.baseUrl}/stock/symbol?exchange=${exchange}&token=${this.apiKey}`);
   }
 
   /**
