@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FinnhubService} from '../../finnhub/finnhub.service';
-import {MarketNews} from '../../finnhub/responses';
+import {News} from '../../finnhub/responses';
 import {Observable} from 'rxjs';
 
 @Component({
@@ -10,7 +10,7 @@ import {Observable} from 'rxjs';
 })
 export class NewsFeedComponent implements OnInit {
 
-  public marketNews: Observable<MarketNews[]>;
+  public marketNews: Observable<News[]>;
 
   public constructor(private finnhub: FinnhubService) { }
 

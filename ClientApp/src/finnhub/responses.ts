@@ -13,7 +13,15 @@
   finnhubIndustry: string;
 }
 
-export interface MarketNews {
+export interface StockSymbol {
+  description: string;
+  displaySymbol: string;
+  symbol: string;
+  type: string;
+  currency: string;
+}
+
+export interface News {
   category: string;
   datetime: number;
   headline: string;

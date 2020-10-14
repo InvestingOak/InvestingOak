@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {CompanyProfile2, MarketNews} from './responses';
+import {CompanyProfile2, News} from './responses';
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +29,18 @@ export class FinnhubService {
    * @param category This parameter can be 1 of the following values: general, forex, crypto, merger.
    * @param minId Use this field to get only news after this ID. Default to 0
    */
-  public marketNews(category: 'general' | 'forex' | 'crypto' | 'merger', minId = 0): Observable<MarketNews[]> {
-    return this.http.get<MarketNews[]>(`${this.baseUrl}/news?category=${category}&minId=${minId}&token=${this.apiKey}`);
+  public marketNews(category: 'general' | 'forex' | 'crypto' | 'merger', minId = 0): Observable<News[]> {
+    return this.http.get<News[]>(`${this.baseUrl}/news?category=${category}&minId=${minId}&token=${this.apiKey}`);
+  }
+
+  /**
+   * List latest company news by symbol. This endpoint is only available for North American companies.
+   * https://finnhub.io/docs/api#company-news
+   * @param symbol Company symbol.
+   * @param from From date YYYY-MM-DD.
+   * @param to To date YYYY-MM-DD.
+   */
+  public companyNews(symbol: string, from: string, to: string): Observable<News[]> {
+    return this.http.get<News[]>(`${this.baseUrl}/company-news?symbol=${symbol}&from=${from}&to=${to}&token=${this.apiKey}`);
   }
 }
