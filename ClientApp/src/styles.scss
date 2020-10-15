@@ -3,14 +3,14 @@
 @use "colors";
 
 a {
-  color: colors.$accent-color;
+  color: colors.$accent;
 
   &:hover {
-    color: colors.$accent-color;
+    color: colors.$accent;
   }
 
   &:visited {
-    color: colors.$accent-color;
+    color: colors.$accent;
   }
 }
 
