@@ -1,21 +1,15 @@
 ﻿using System.Threading.Tasks;
-using AutoMapper;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Microsoft.Extensions.Logging;
 
 namespace InvestingOak.Data
 {
     public class Repository : IRepository
     {
         private readonly ApplicationDbContext context;
-        private readonly ILogger logger;
-        private readonly IMapper mapper;
 
-        public Repository(ApplicationDbContext context, ILogger<Repository> logger, IMapper mapper)
+        public Repository(ApplicationDbContext context)
         {
             this.context = context;
-            this.logger = logger;
-            this.mapper = mapper;
         }
 
         public bool SaveAll()
@@ -37,7 +31,7 @@ namespace InvestingOak.Data
         {
             return await context.AddAsync(model);
         }
-        
+
         public EntityEntry RemoveEntity(object model)
         {
             return context.Remove(model);
