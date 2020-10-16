@@ -40,21 +40,28 @@ namespace InvestingOak.Controllers
             serializerOptions.Converters.Add(new DateTimeOffsetConverter());
         }
 
-        // GET api/stocks/overview?{symbol}
         [HttpGet("{symbol}/overview")]
         public IActionResult Overview(string symbol)
         {
-            var parameters = $"?function=OVERVIEW&symbol={symbol.ToUpper()}&apikey={AlphaVantageKey}";
+            var parameters = $"?function=OVERVIEW&symbol={symbol.ToUpperInvariant()}&apikey={AlphaVantageKey}";
 
             HttpResponseMessage response = client.GetAsync(parameters).Result;
-            if (!response.IsSuccessStatusCode) return BadRequest($"Request failed. Status code: {response.StatusCode}");
+            if (!response.IsSuccessStatusCode)
+            {
+                return BadRequest($"Request failed. Status code: {response.StatusCode}");
+            }
 
             StockOverview dataObject = response.Content.ReadFromJsonAsync<StockOverview>(serializerOptions).Result;
-            if (dataObject is null) return BadRequest("Response was empty.");
+            if (dataObject is null)
+            {
+                return BadRequest("Response was empty.");
+            }
 
             if (dataObject.Symbol is null)
+            {
                 return StatusCode(StatusCodes.Status429TooManyRequests,
                     "Rate limit exceeded. Limit is 5 calls per minute and 500 calls per day.");
+            }
 
             return Ok(dataObject);
         }
@@ -62,18 +69,26 @@ namespace InvestingOak.Controllers
         [HttpGet("{symbol}/incomestatement")]
         public IActionResult IncomeStatement(string symbol)
         {
-            var parameters = $"?function=INCOME_STATEMENT&symbol={symbol.ToUpper()}&apikey={AlphaVantageKey}";
+            var parameters = $"?function=INCOME_STATEMENT&symbol={symbol.ToUpperInvariant()}&apikey={AlphaVantageKey}";
 
             HttpResponseMessage response = client.GetAsync(parameters).Result;
-            if (!response.IsSuccessStatusCode) return BadRequest($"Request failed. Status code: {response.StatusCode}");
+            if (!response.IsSuccessStatusCode)
+            {
+                return BadRequest($"Request failed. Status code: {response.StatusCode}");
+            }
 
             IncomeStatementCollection dataObject =
                 response.Content.ReadFromJsonAsync<IncomeStatementCollection>(serializerOptions).Result;
-            if (dataObject is null) return BadRequest("Response was empty.");
+            if (dataObject is null)
+            {
+                return BadRequest("Response was empty.");
+            }
 
             if (dataObject.Symbol is null)
+            {
                 return StatusCode(StatusCodes.Status429TooManyRequests,
                     "Rate limit exceeded. Limit is 5 calls per minute and 500 calls per day.");
+            }
 
             return Ok(dataObject);
         }
