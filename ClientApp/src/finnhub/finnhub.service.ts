@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {CompanyProfile2, News, NewsSentiment, PriceTarget, RecommendationTrend, StockSymbol} from './responses';
+import {IdType} from './idType';
 
 @Injectable({
   providedIn: 'root'
@@ -19,8 +20,8 @@ export class FinnhubService {
    * @param idType
    * @param value
    */
-  public companyProfile2(idType: 'symbol' | 'isin' | 'cusip' , value: string): Observable<CompanyProfile2> {
-    return this.http.get<CompanyProfile2>(`${this.baseUrl}/stock/profile2?${idType}=${value}&token=${this.apiKey}`);
+  public companyProfile2(idType: IdType, value: string): Observable<CompanyProfile2> {
+    return this.http.get<CompanyProfile2>(`${this.baseUrl}/stock/profile2?${this.idTypeToString(idType)}=${value}&token=${this.apiKey}`);
   }
 
   /**
@@ -87,5 +88,16 @@ export class FinnhubService {
    */
   public priceTarget(symbol: string): Observable<PriceTarget> {
     return this.http.get<PriceTarget>(`${this.baseUrl}/stock/price-target?symbol=${symbol}&token=${this.apiKey}`);
+  }
+
+  private idTypeToString(idType: IdType): string {
+    switch (idType) {
+      case IdType.Symbol:
+        return 'symbol';
+      case IdType.Isin:
+        return 'isin';
+      case IdType.Cusip:
+        return 'cusip';
+    }
   }
 }
