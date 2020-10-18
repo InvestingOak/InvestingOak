@@ -8,7 +8,7 @@
   phone: string;
   shareOutstanding: number;
   ticker: string;
-  webUrl: string;
+  weburl: string;
   logo: string;
   finnhubIndustry: string;
 }
@@ -66,4 +66,22 @@ export interface PriceTarget {
   targetLow: number;
   targetMean: number;
   targetMedian: number;
+}
+
+export interface Quote {
+  o: number;
+  h: number;
+  l: number;
+  c: number;
+  pc: number;
+}
+
+export interface StockCandles {
+  c: number[],
+  h: number[],
+  l: number[],
+  o: number[],
+  s: string,
+  t: number[],
+  v: number[]
 }

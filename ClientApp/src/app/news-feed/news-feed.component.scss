@@ -8,7 +8,22 @@
   }
 
   .news-thumbnail {
-    width: 220px;
-    height: 123px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    img {
+      object-fit: contain;
+      width: 220px;
+      height: 123px;
+    }
   }
+}
+
+.article-summary {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
