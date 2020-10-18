@@ -2,7 +2,7 @@
 
 namespace InvestingOak.Models
 {
-    public class IncomeStatementCollection
+    public class IncomeStatementCollection : AlphaVantage
     {
         public string Symbol { get; set; }
 
