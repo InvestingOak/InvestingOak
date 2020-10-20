@@ -4,6 +4,7 @@ import {CompanyProfile2, News, Quote} from '../../finnhub/responses';
 import {Observable} from 'rxjs';
 import {FinnhubService} from '../../finnhub/finnhub.service';
 import {IdType} from '../../finnhub/idType';
+import {Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-stocks',
@@ -17,7 +18,8 @@ export class StocksComponent implements OnInit {
   public profile$: Observable<CompanyProfile2>;  // Company profile
   public companyNews$: Observable<News[]>;  // News source from API
 
-  public constructor(private finnhub: FinnhubService, private route: ActivatedRoute, private router: Router) {
+  public constructor(private finnhub: FinnhubService, private route: ActivatedRoute,
+                     private router: Router, private titleService: Title) {
     // Load data on page refresh (fixes navigating between symbols)
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
@@ -27,6 +29,8 @@ export class StocksComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+    this.titleService.setTitle(`${this.symbol} · InvestingOak`);
+
     // Load data on page load
     this.loadData();
   }
