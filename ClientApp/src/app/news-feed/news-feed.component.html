@@ -32,12 +32,13 @@
     </a>
   </div>
 
+  <!-- Page links -->
   <ngb-pagination *ngIf="usePagination" [(page)]="page"
+                  [rotate]="true"
                   [boundaryLinks]="true"
                   [collectionSize]="news.length"
                   [maxSize]="maxSize"
                   [pageSize]="pageSize"
-                  [rotate]="true"
                   class="mt-2 d-flex justify-content-center">
   </ngb-pagination>
 </div>

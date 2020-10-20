@@ -1,0 +1,48 @@
+<div class="row pt-2">
+  <!-- Analyst ratings -->
+  <div *ngIf="recommendations$ | async as recommendations" class="col">
+    <h3>Rating:
+      <span class="badge badge-{{getRecommendationColor(getMajorityRecommendation(recommendations[0]))}}">
+        {{getMajorityRecommendation(recommendations[0])}}
+      </span>
+    </h3>
+    <div class="exchange">
+      <p class="mb-0"><strong>Strong Buy:</strong> {{recommendations[0]?.strongBuy}}</p>
+      <p class="mb-0"><strong>Buy:</strong> {{recommendations[0]?.buy}}</p>
+      <p class="mb-0"><strong>Hold:</strong> {{recommendations[0]?.hold}}</p>
+      <p class="mb-0"><strong>Sell:</strong> {{recommendations[0]?.sell}}</p>
+      <p class="mb-0"><strong>Strong Sell:</strong> {{recommendations[0]?.strongSell}}</p>
+    </div>
+  </div>
+  <!-- Price targets -->
+  <div *ngIf="priceTarget$ | async as priceTarget" class="col">
+    <h3 *ngIf="quote$ | async as quote">
+      Price Target:
+      <span class="badge badge-{{getTargetColor(priceTarget.targetMedian, quote.c)}}">
+        {{priceTarget.targetMedian}}
+      </span>
+    </h3>
+    <div class="exchange">
+      <p class="mb-0"><strong>High:</strong> {{priceTarget.targetHigh}}</p>
+      <p class="mb-0"><strong>Average:</strong> {{priceTarget.targetMean}}</p>
+      <p class="mb-0"><strong>Median:</strong> {{priceTarget.targetMedian}}</p>
+      <p class="mb-0"><strong>Low:</strong> {{priceTarget.targetLow}}</p>
+    </div>
+  </div>
+  <!-- News sentiment -->
+  <div *ngIf="newsSentiment$ | async as newsSentiment" class="col">
+    <h3
+      *ngIf="{value: getSentiment(newsSentiment.companyNewsScore, newsSentiment.sectorAverageNewsScore, newsSentiment.sentiment.bullishPercent)} as sentiment">
+      Sentiment:
+      <span class="badge badge-{{getSentimentColor(sentiment.value)}}">
+        {{getSentimentString(sentiment.value)}}
+      </span>
+    </h3>
+    <div class="exchange">
+      <p class="mb-0"><strong>{{symbol}} Score:</strong> {{newsSentiment.companyNewsScore | percent}}</p>
+      <p class="mb-0"><strong>Sector Average:</strong> {{newsSentiment.sectorAverageNewsScore | percent}}</p>
+      <p class="mb-0"><strong>Bullish:</strong> {{newsSentiment.sentiment.bullishPercent | percent}}</p>
+      <p class="mb-0"><strong>Bearish:</strong> {{newsSentiment.sentiment.bearishPercent | percent}}</p>
+    </div>
+  </div>
+</div>
