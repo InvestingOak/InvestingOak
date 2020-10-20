@@ -14,6 +14,9 @@ import {ThemeSelectorComponent} from './theme-selector/theme-selector.component'
 import {UserMenuComponent} from './user-menu/user-menu.component';
 import {FinnhubService} from '../finnhub/finnhub.service';
 import {StocksComponent} from './stocks/stocks.component';
+import {StockHeaderComponent} from './stocks/stock-header/stock-header.component';
+import {StockSummaryComponent} from './stocks/stock-summary/stock-summary.component';
+import {StockAnalysisComponent} from './stocks/stock-analysis/stock-analysis.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +27,10 @@ import {StocksComponent} from './stocks/stocks.component';
     NewsFeedComponent,
     ThemeSelectorComponent,
     UserMenuComponent,
-    StocksComponent
+    StocksComponent,
+    StockHeaderComponent,
+    StockSummaryComponent,
+    StockAnalysisComponent
   ],
   imports: [
     AppRoutingModule,

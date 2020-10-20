@@ -10,25 +10,34 @@ import * as _ from 'underscore';
 })
 export class NewsFeedComponent {
 
-  public page = 1;
+  // Input parameters
+  @Input()
+  public news: Observable<News[]>;  // News feed object
 
   @Input()
-  public news: Observable<News[]>;
+  public title: string; // Title to be displayed on top
 
   @Input()
-  public title: string;
+  public usePagination = true;  // Whether to split into pages
 
-  @Input()
-  public usePagination = true;
+  public page = 1;      // Current page
+  public pageSize = 5;  // Max number of articles per page
+  public maxSize = 10;  // Max number of pages shown in pagination bar
 
-  public pageSize = 5;
-
-  public maxSize = 10;
-
+  /**
+   * Filter news to remove unwanted articles.
+   * Currently only removes duplicate headlines.
+   * @param news
+   */
   public filterNews(news: News[]): News[] {
     return _.uniq(news, n => n.headline);
   }
 
+  /**
+   * Returns time since a given time.
+   * Examples: 5 minutes ago, 1 day ago, Just now
+   * @param timestamp UNIX timestamp in seconds
+   */
   public getAge(timestamp: number): string {
     const seconds = Math.floor((+new Date() - +new Date(timestamp * 1000)) / 1000);
     if (seconds < 29) {
