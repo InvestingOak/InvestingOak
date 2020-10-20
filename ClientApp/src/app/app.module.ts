@@ -1,4 +1,4 @@
-import {BrowserModule} from '@angular/platform-browser';
+import {BrowserModule, Title} from '@angular/platform-browser';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {NgModule} from '@angular/core';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
@@ -42,7 +42,8 @@ import {SearchComponent} from './nav-menu/search/search.component';
     TradingViewModule,
   ],
   providers: [
-    FinnhubService
+    FinnhubService,
+    Title
   ],
   bootstrap: [AppComponent]
 })
