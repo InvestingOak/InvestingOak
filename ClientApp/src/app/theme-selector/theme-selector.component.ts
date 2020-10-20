@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
+import {Component, OnInit} from '@angular/core';
+import {faMoon, faSun} from '@fortawesome/free-solid-svg-icons';
 
 enum Theme {
   Light,
@@ -32,26 +32,9 @@ export class ThemeSelectorComponent implements OnInit {
     }
   }
 
-  public setTheme(theme: Theme): void {
-    if (theme === Theme.Light) {
-      document.documentElement.classList.remove('dark-mode');
-      document.querySelectorAll('.inverted').forEach(result => {
-        result.classList.remove('invert');
-      });
-      this.faThemeIcon = faMoon;
-    }
-    else {
-      document.documentElement.classList.add('dark-mode');
-      document.querySelectorAll('.inverted').forEach(result => {
-        result.classList.add('invert');
-      });
-      this.faThemeIcon = faSun;
-    }
-
-    localStorage.setItem('theme', JSON.stringify(theme));
-    this.theme = theme;
-  }
-
+  /**
+   * Toggle theme
+   */
   public onThemeToggle(): void {
     switch (this.theme) {
       case Theme.Light:
@@ -61,5 +44,28 @@ export class ThemeSelectorComponent implements OnInit {
         this.setTheme(Theme.Light);
         break;
     }
+  }
+
+  /**
+   * Set the the theme
+   * @param theme
+   */
+  private setTheme(theme: Theme): void {
+    if (theme === Theme.Light) {
+      document.documentElement.classList.remove('dark-mode');
+      document.querySelectorAll('.inverted').forEach(result => {
+        result.classList.remove('invert');
+      });
+      this.faThemeIcon = faMoon;
+    } else {
+      document.documentElement.classList.add('dark-mode');
+      document.querySelectorAll('.inverted').forEach(result => {
+        result.classList.add('invert');
+      });
+      this.faThemeIcon = faSun;
+    }
+
+    localStorage.setItem('theme', JSON.stringify(theme));
+    this.theme = theme;
   }
 }

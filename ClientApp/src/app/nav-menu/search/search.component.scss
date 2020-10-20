@@ -1,0 +1,22 @@
+.search-block {
+  position: relative;
+
+  .search-suggestions {
+    display: block;
+    position: absolute;
+    width: 100%;
+    background-color: #fff;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+
+    li {
+      &:hover {
+        cursor: pointer;
+      }
+
+      a {
+        padding-left: 0.5rem;
+      }
+    }
+  }
+}

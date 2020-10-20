@@ -1,0 +1,18 @@
+.chart {
+  max-height: 412px;
+  display: block;
+}
+
+.read {
+  overflow: hidden;
+  transition: all 0.3s;
+}
+
+.read-less {
+  height: 15rem;
+}
+
+.read-more {
+  cursor: pointer;
+  user-select: none;
+}

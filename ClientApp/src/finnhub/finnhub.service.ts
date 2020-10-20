@@ -144,7 +144,11 @@ export class FinnhubService {
       .pipe(shareReplay({bufferSize: 1, refCount: true}));
   }
 
-  public getExchangeFromResponse(exchange: string): string {
+  /**
+   * Returns an exchange's acronym for full name.
+   * @param exchange
+   */
+  public getExchangeAcronym(exchange: string): string {
     switch (exchange) {
       case 'NASDAQ NMS - GLOBAL MARKET':
         return 'NASDAQ';
