@@ -1,4 +1,4 @@
-import {BrowserModule} from '@angular/platform-browser';
+import {BrowserModule, Title} from '@angular/platform-browser';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {NgModule} from '@angular/core';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
@@ -14,6 +14,10 @@ import {ThemeSelectorComponent} from './theme-selector/theme-selector.component'
 import {UserMenuComponent} from './user-menu/user-menu.component';
 import {FinnhubService} from '../finnhub/finnhub.service';
 import {StocksComponent} from './stocks/stocks.component';
+import {StockHeaderComponent} from './stocks/stock-header/stock-header.component';
+import {StockSummaryComponent} from './stocks/stock-summary/stock-summary.component';
+import {StockAnalysisComponent} from './stocks/stock-analysis/stock-analysis.component';
+import {SearchComponent} from './nav-menu/search/search.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +28,11 @@ import {StocksComponent} from './stocks/stocks.component';
     NewsFeedComponent,
     ThemeSelectorComponent,
     UserMenuComponent,
-    StocksComponent
+    StocksComponent,
+    StockHeaderComponent,
+    StockSummaryComponent,
+    StockAnalysisComponent,
+    SearchComponent
   ],
   imports: [
     AppRoutingModule,
@@ -34,7 +42,8 @@ import {StocksComponent} from './stocks/stocks.component';
     TradingViewModule,
   ],
   providers: [
-    FinnhubService
+    FinnhubService,
+    Title
   ],
   bootstrap: [AppComponent]
 })

@@ -1,4 +1,4 @@
-@use "../../colors";
+@use "../../../colors";
 
 .stock-header {
   background-image: linear-gradient(-41deg, darken(colors.$accent, 10%) 0%, lighten(colors.$accent, 10%) 100%);
@@ -18,34 +18,15 @@
       font-weight: 500;
       position: absolute;
     }
+
+    .price {
+      font-weight: 500;
+      color: transparentize(#fff, 0.25);
+    }
+
+    .price-changes {
+      color: transparentize(#fff, 0.25);
+      font-weight: 500;
+    }
   }
-}
-
-.read {
-  overflow: hidden;
-  transition: all 0.3s;
-}
-
-.read-less {
-  height: 15rem;
-}
-
-.read-more {
-  cursor: pointer;
-  user-select: none;
-}
-
-.price {
-  font-weight: 500;
-  color: transparentize(#fff, 0.25);
-}
-
-.price-changes {
-  color: transparentize(#fff, 0.25);
-  font-weight: 500;
-}
-
-.chart {
-  max-height: 412px;
-  display: block;
 }
