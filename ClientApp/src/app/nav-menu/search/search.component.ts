@@ -13,7 +13,7 @@ import {FinnhubService} from '../../../finnhub/finnhub.service';
 export class SearchComponent implements OnInit {
 
   public search = faSearch;
-  public symbols: Observable<StockSymbol[]>;
+  public symbols$: Observable<StockSymbol[]>;
   public suggestions: StockSymbol[] = [];
   public showSuggestions = false;
 
@@ -21,7 +21,7 @@ export class SearchComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.symbols = this.finnhub.symbols('US');
+    this.symbols$ = this.finnhub.symbols('US');
   }
 
   public suggest(input: string): void {
@@ -30,7 +30,7 @@ export class SearchComponent implements OnInit {
       return;
     }
 
-    this.symbols.subscribe(symbols => {
+    this.symbols$.subscribe(symbols => {
       this.suggestions = symbols.filter(s => {
         const normInput = input.toUpperCase();
         return s.displaySymbol.includes(normInput) || s.description.includes(normInput);
