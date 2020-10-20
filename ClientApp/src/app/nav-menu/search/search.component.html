@@ -1,0 +1,12 @@
+<div class="search-block">
+  <input #searchBar (blur)="showSuggestions = false" (click)="showSuggestions = true"
+         (input)="suggest(searchBar.value)" aria-label="Search" class="form-control flex-fill"
+         placeholder="Search for a symbol or company" type="text">
+  <ul *ngIf="showSuggestions && suggestions.length" class="search-suggestions nav">
+    <li *ngFor="let s of suggestions" class="nav-item">
+      <a (mousedown)="router.navigate(['stocks', s.symbol]); searchBar.value = ''" class="nav-link">
+        {{s.displaySymbol}}: {{s.description}}
+      </a>
+    </li>
+  </ul>
+</div>
