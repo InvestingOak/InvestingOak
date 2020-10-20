@@ -23,7 +23,7 @@ export class StockSummaryComponent {
   }
 
   public getExchangeShort(name: string): string {
-    return this.finnhub.getExchangeFromResponse(name);
+    return this.finnhub.getExchangeAcronym(name);
   }
 
   /**
