@@ -18,8 +18,6 @@ export class UserMenuComponent implements OnInit {
   public ngOnInit(): void {
     this.isAuthenticated = this.authorizeService.isAuthenticated();
     this.userName = this.authorizeService.getUser()
-      .pipe(
-        map(u => u && u.name)
-      );
+      .pipe(map(u => u && u.name));
   }
 }
