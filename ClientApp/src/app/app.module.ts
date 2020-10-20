@@ -17,6 +17,7 @@ import {StocksComponent} from './stocks/stocks.component';
 import {StockHeaderComponent} from './stocks/stock-header/stock-header.component';
 import {StockSummaryComponent} from './stocks/stock-summary/stock-summary.component';
 import {StockAnalysisComponent} from './stocks/stock-analysis/stock-analysis.component';
+import {SearchComponent} from './nav-menu/search/search.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import {StockAnalysisComponent} from './stocks/stock-analysis/stock-analysis.com
     StocksComponent,
     StockHeaderComponent,
     StockSummaryComponent,
-    StockAnalysisComponent
+    StockAnalysisComponent,
+    SearchComponent
   ],
   imports: [
     AppRoutingModule,
