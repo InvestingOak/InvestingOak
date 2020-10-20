@@ -4,6 +4,7 @@ import {Observable} from 'rxjs';
 import {StockSymbol} from '../../../finnhub/responses';
 import {Router} from '@angular/router';
 import {FinnhubService} from '../../../finnhub/finnhub.service';
+import * as _ from 'underscore';
 
 @Component({
   selector: 'app-search',
@@ -16,6 +17,7 @@ export class SearchComponent implements OnInit {
   public symbols$: Observable<StockSymbol[]>;
   public suggestions: StockSymbol[] = [];
   public showSuggestions = false;
+  public numberSuggestions = 4;
 
   public constructor(public router: Router, private finnhub: FinnhubService) {
   }
@@ -31,10 +33,22 @@ export class SearchComponent implements OnInit {
     }
 
     this.symbols$.subscribe(symbols => {
-      this.suggestions = symbols.filter(s => {
-        const normInput = input.toUpperCase();
-        return s.displaySymbol.includes(normInput) || s.description.includes(normInput);
-      }).slice(0, 4);
+      const normInput = input.toUpperCase();
+
+      // First, suggest symbols that match input
+      this.suggestions = _.unique(symbols.filter(s => {
+        return s.displaySymbol.startsWith(normInput);
+      }) // Seconds, suggest symbols with names that match input
+        .concat(symbols.filter(s => {
+          return s.description.startsWith(normInput);
+        })) // Third, suggest names that include input, but don't match
+        .concat(symbols.filter(s => {
+          return s.description.includes(normInput);
+        })) // Third suggest symbols that include input, but don't match
+        .concat(symbols.filter(s => {
+          return s.displaySymbol.includes(normInput);
+        })) // Remove symbols with empty description
+        .filter(s => s.description));
     });
   }
 }
