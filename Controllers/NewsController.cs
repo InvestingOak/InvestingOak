@@ -38,24 +38,7 @@ namespace InvestingOak.Controllers
         }
 
         [HttpGet("{category}")]
-        public ActionResult MarketNews(string category)
-        {
-            var parameters = $"https://finnhub.io/api/v1/news?category={category}";
-
-            HttpResponseMessage response = finnhubClient.GetAsync(parameters).Result;
-            if (!response.IsSuccessStatusCode)
-            {
-                return BadRequest($"Status code: {response.StatusCode}");
-            }
-
-            List<NewsArticle> articles =
-                response.Content.ReadFromJsonAsync<List<NewsArticle>>(serializerOptions).Result;
-
-            return Ok(articles);
-        }
-
-        [HttpGet("{category}")]
-        public ActionResult MarketNews(string category, int minId)
+        public ActionResult MarketNews(string category, int minId = 0)
         {
             var parameters = $"https://finnhub.io/api/v1/news?category={category}&minId={minId}";
 
