@@ -18,6 +18,7 @@ export class SearchComponent implements OnInit {
   public suggestions: StockSymbol[] = [];
   public showSuggestions = false;
   public numberSuggestions = 4;
+  public input = '';
 
   public constructor(public router: Router, private finnhub: FinnhubService) {
   }
@@ -26,14 +27,14 @@ export class SearchComponent implements OnInit {
     this.symbols$ = this.finnhub.symbols('US');
   }
 
-  public suggest(input: string): void {
-    if (!input) {
+  public suggest(): void {
+    if (!this.input) {
       this.suggestions = [];
       return;
     }
 
     this.symbols$.subscribe(symbols => {
-      const normInput = input.toUpperCase();
+      const normInput = this.input.toUpperCase();
 
       // First, suggest symbols that match input
       this.suggestions = _.unique(symbols.filter(s => {
@@ -50,5 +51,14 @@ export class SearchComponent implements OnInit {
         })) // Remove symbols with empty description
         .filter(s => s.description));
     });
+  }
+
+  public onEnter(): void {
+    if (this.input === '' || !this.suggestions.find(s => s.symbol === this.input.toUpperCase())) {
+      return;
+    }
+
+    const symbol = this.suggestions[0].symbol;
+    this.router.navigate(['stocks', symbol]).then();
   }
 }

@@ -1,7 +1,7 @@
 <div *ngIf="profile$ | async as profile" class="summary row">
   <!-- Stock chart using TradingView -->
   <div *ngIf="quote$ | async as quote" class="col chart">
-    <app-symbol-overview exchange="{{getExchangeShort(profile.exchange)}}" name="{{profile.name}}"
+    <app-symbol-overview exchange="{{profile.exchange}}" name="{{profile.name}}"
                          period="1D" red="{{getChange(quote.c, quote.pc) < 0}}" symbol="{{symbol}}">
     </app-symbol-overview>
   </div>

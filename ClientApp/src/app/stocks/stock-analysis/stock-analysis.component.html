@@ -1,17 +1,17 @@
 <div class="row pt-2">
   <!-- Analyst ratings -->
-  <div *ngIf="recommendations$ | async as recommendations" class="col">
+  <div *ngIf="recommendation$ | async as recommendation" class="col">
     <h3>Rating:
-      <span class="badge badge-{{getRecommendationColor(getMajorityRecommendation(recommendations[0]))}}">
-        {{getMajorityRecommendation(recommendations[0])}}
+      <span class="badge badge-{{getRecommendationColor(getMajorityRecommendation(recommendation))}}">
+        {{getMajorityRecommendation(recommendation)}}
       </span>
     </h3>
     <div class="exchange">
-      <p class="mb-0"><strong>Strong Buy:</strong> {{recommendations[0]?.strongBuy}}</p>
-      <p class="mb-0"><strong>Buy:</strong> {{recommendations[0]?.buy}}</p>
-      <p class="mb-0"><strong>Hold:</strong> {{recommendations[0]?.hold}}</p>
-      <p class="mb-0"><strong>Sell:</strong> {{recommendations[0]?.sell}}</p>
-      <p class="mb-0"><strong>Strong Sell:</strong> {{recommendations[0]?.strongSell}}</p>
+      <p class="mb-0"><strong>Strong Buy:</strong> {{recommendation?.strongBuy}}</p>
+      <p class="mb-0"><strong>Buy:</strong> {{recommendation?.buy}}</p>
+      <p class="mb-0"><strong>Hold:</strong> {{recommendation?.hold}}</p>
+      <p class="mb-0"><strong>Sell:</strong> {{recommendation?.sell}}</p>
+      <p class="mb-0"><strong>Strong Sell:</strong> {{recommendation?.strongSell}}</p>
     </div>
   </div>
   <!-- Price targets -->

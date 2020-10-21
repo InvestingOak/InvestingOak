@@ -14,6 +14,11 @@ namespace InvestingOak.Converters
                 return value;
             }
 
+            if (reader.TokenType == JsonTokenType.Number)
+            {
+                return reader.GetDecimal();
+            }
+
             return default;
         }
 
