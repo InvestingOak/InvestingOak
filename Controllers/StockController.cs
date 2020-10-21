@@ -15,18 +15,13 @@ namespace InvestingOak.Controllers
     [ResponseCache(VaryByHeader = "User-Agent", Duration = 30)]
     public class StockController : ControllerBase
     {
-        private const string AlphaVantageKey = "HNAFS0NKXJHEG5YI";
-        private const string AlphaVantageBaseUrl = "https://www.alphavantage.co/query";
         private const string FinnhubKey = "btt5puv48v6q0kg1m610";
-        private const string FinnhubBaseUrl = "https://finnhub.io/api/v1";
-        private readonly HttpClient alphaVantageClient;
         private readonly HttpClient finnhubClient;
         private readonly JsonSerializerOptions serializerOptions;
 
         public StockController()
         {
             // Configure HttpClients
-            alphaVantageClient = new HttpClient();
             finnhubClient = new HttpClient();
             finnhubClient.DefaultRequestHeaders.Add("X-Finnhub-Token", FinnhubKey);
 
@@ -47,227 +42,171 @@ namespace InvestingOak.Controllers
         [HttpGet]
         public ActionResult Symbols(string exchange)
         {
-            try
+            var parameters = $"https://finnhub.io/api/v1/stock/symbol?exchange={exchange.ToUpperInvariant()}";
+
+            HttpResponseMessage response = finnhubClient.GetAsync(parameters).Result;
+            if (!response.IsSuccessStatusCode)
             {
-                var parameters = $"https://finnhub.io/api/v1/stock/symbol?exchange={exchange.ToUpperInvariant()}";
-
-                HttpResponseMessage response = finnhubClient.GetAsync(parameters).Result;
-                if (!response.IsSuccessStatusCode)
-                {
-                    throw new Exception($"Status code: {response.StatusCode}");
-                }
-
-                List<StockSymbol> stockSymbol =
-                    response.Content.ReadFromJsonAsync<List<StockSymbol>>(serializerOptions).Result;
-
-                return Ok(stockSymbol);
+                return BadRequest($"Status code: {response.StatusCode}");
             }
-            catch (Exception e)
-            {
-                return BadRequest($"Request failed. {e.Message}");
-            }
+
+            List<StockSymbol> stockSymbol =
+                response.Content.ReadFromJsonAsync<List<StockSymbol>>(serializerOptions).Result;
+
+            return Ok(stockSymbol);
         }
 
         [HttpGet("{symbol}/profile")]
         public ActionResult Profile(string symbol)
         {
-            try
+            var parameters = $"https://finnhub.io/api/v1/stock/profile2?symbol={symbol.ToUpperInvariant()}";
+
+            HttpResponseMessage response = finnhubClient.GetAsync(parameters).Result;
+            if (!response.IsSuccessStatusCode)
             {
-                var parameters = $"https://finnhub.io/api/v1/stock/profile2?symbol={symbol.ToUpperInvariant()}";
-
-                HttpResponseMessage response = finnhubClient.GetAsync(parameters).Result;
-                if (!response.IsSuccessStatusCode)
-                {
-                    throw new Exception($"Status code: {response.StatusCode}");
-                }
-
-                CompanyProfile2 profile = response.Content.ReadFromJsonAsync<CompanyProfile2>(serializerOptions).Result;
-
-                if (profile?.Ticker is null)
-                {
-                    throw new Exception("Symbol is invalid or profile does not exist.");
-                }
-
-                profile.Exchange = GetExchangeAcronym(profile.Exchange);
-
-                return Ok(profile);
+                return BadRequest($"Status code: {response.StatusCode}");
             }
-            catch (Exception e)
+
+            CompanyProfile2 profile = response.Content.ReadFromJsonAsync<CompanyProfile2>(serializerOptions).Result;
+
+            if (profile?.Ticker is null)
             {
-                return BadRequest($"Request failed. {e.Message}");
+                return BadRequest("Symbol is invalid or profile does not exist.");
             }
+
+            profile.Exchange = GetExchangeAcronym(profile.Exchange);
+
+            return Ok(profile);
         }
 
         [HttpGet("{symbol}/sentiment")]
         public ActionResult Sentiment(string symbol)
         {
-            try
+            var parameters = $"https://finnhub.io/api/v1/news-sentiment?symbol={symbol.ToUpperInvariant()}";
+
+            HttpResponseMessage response = finnhubClient.GetAsync(parameters).Result;
+            if (!response.IsSuccessStatusCode)
             {
-                var parameters = $"https://finnhub.io/api/v1/news-sentiment?symbol={symbol.ToUpperInvariant()}";
-
-                HttpResponseMessage response = finnhubClient.GetAsync(parameters).Result;
-                if (!response.IsSuccessStatusCode)
-                {
-                    throw new Exception($"Status code: {response.StatusCode}");
-                }
-
-                NewsSentiment sentiment = response.Content.ReadFromJsonAsync<NewsSentiment>(serializerOptions).Result;
-
-                if (sentiment?.Symbol is null)
-                {
-                    throw new Exception("Symbol is invalid or news sentiment does not exist.");
-                }
-
-                return Ok(sentiment);
+                return BadRequest($"Status code: {response.StatusCode}");
             }
-            catch (Exception e)
+
+            NewsSentiment sentiment = response.Content.ReadFromJsonAsync<NewsSentiment>(serializerOptions).Result;
+
+            if (sentiment?.Symbol is null)
             {
-                return BadRequest($"Request failed. {e.Message}");
+                return BadRequest("Symbol is invalid or news sentiment does not exist.");
             }
+
+            return Ok(sentiment);
         }
 
         [HttpGet("{symbol}/news")]
         public ActionResult News(string symbol, DateTimeOffset from, DateTimeOffset to)
         {
-            try
+            var fromStr = from.ToString("yyyy-MM-dd");
+            var toStr = to.ToString("yyyy-MM-dd");
+            var parameters =
+                $"https://finnhub.io/api/v1/company-news?symbol={symbol.ToUpperInvariant()}&from={fromStr}&to={toStr}";
+
+            HttpResponseMessage response = finnhubClient.GetAsync(parameters).Result;
+            if (!response.IsSuccessStatusCode)
             {
-                var fromStr = from.ToString("yyyy-MM-dd");
-                var toStr = to.ToString("yyyy-MM-dd");
-                var parameters =
-                    $"https://finnhub.io/api/v1/company-news?symbol={symbol.ToUpperInvariant()}&from={fromStr}&to={toStr}";
-
-                HttpResponseMessage response = finnhubClient.GetAsync(parameters).Result;
-                if (!response.IsSuccessStatusCode)
-                {
-                    throw new Exception($"Status code: {response.StatusCode}");
-                }
-
-                List<NewsArticle> articles =
-                    response.Content.ReadFromJsonAsync<List<NewsArticle>>(serializerOptions).Result;
-
-                return Ok(articles);
+                return BadRequest($"Status code: {response.StatusCode}");
             }
-            catch (Exception e)
-            {
-                return BadRequest($"Request failed. {e.Message}");
-            }
+
+            List<NewsArticle> articles =
+                response.Content.ReadFromJsonAsync<List<NewsArticle>>(serializerOptions).Result;
+
+            return Ok(articles);
         }
 
         [HttpGet("{symbol}/recommendation")]
         public ActionResult Recommendation(string symbol)
         {
-            try
+            var parameters = $"https://finnhub.io/api/v1/stock/recommendation?symbol={symbol.ToUpperInvariant()}";
+
+            HttpResponseMessage response = finnhubClient.GetAsync(parameters).Result;
+            if (!response.IsSuccessStatusCode)
             {
-                var parameters = $"https://finnhub.io/api/v1/stock/recommendation?symbol={symbol.ToUpperInvariant()}";
-
-                HttpResponseMessage response = finnhubClient.GetAsync(parameters).Result;
-                if (!response.IsSuccessStatusCode)
-                {
-                    throw new Exception($"Status code: {response.StatusCode}");
-                }
-
-                List<Recommendation> recommendations =
-                    response.Content.ReadFromJsonAsync<List<Recommendation>>(serializerOptions).Result;
-
-                if (recommendations is null)
-                {
-                    throw new Exception("Recommendation was empty.");
-                }
-
-                return Ok(recommendations[0]);
+                return BadRequest($"Status code: {response.StatusCode}");
             }
-            catch (Exception e)
+
+            List<Recommendation> recommendations =
+                response.Content.ReadFromJsonAsync<List<Recommendation>>(serializerOptions).Result;
+
+            if (recommendations is null)
             {
-                return BadRequest($"Request failed. {e.Message}");
+                return BadRequest("Recommendation was empty.");
             }
+
+            return Ok(recommendations[0]);
         }
 
         [HttpGet("{symbol}/pricetarget")]
         public ActionResult PriceTarget(string symbol)
         {
-            try
+            var parameters = $"https://finnhub.io/api/v1/stock/price-target?symbol={symbol.ToUpperInvariant()}";
+
+            HttpResponseMessage response = finnhubClient.GetAsync(parameters).Result;
+            if (!response.IsSuccessStatusCode)
             {
-                var parameters = $"https://finnhub.io/api/v1/stock/price-target?symbol={symbol.ToUpperInvariant()}";
-
-                HttpResponseMessage response = finnhubClient.GetAsync(parameters).Result;
-                if (!response.IsSuccessStatusCode)
-                {
-                    throw new Exception($"Status code: {response.StatusCode}");
-                }
-
-                PriceTarget target = response.Content.ReadFromJsonAsync<PriceTarget>(serializerOptions).Result;
-
-                if (target is null)
-                {
-                    throw new Exception("Price target was empty.");
-                }
-
-                return Ok(target);
+                return BadRequest($"Status code: {response.StatusCode}");
             }
-            catch (Exception e)
+
+            PriceTarget target = response.Content.ReadFromJsonAsync<PriceTarget>(serializerOptions).Result;
+
+            if (target is null)
             {
-                return BadRequest($"Request failed. {e.Message}");
+                return BadRequest("Price target was empty.");
             }
+
+            return Ok(target);
         }
 
         [HttpGet("{symbol}/quote")]
         public ActionResult Quote(string symbol)
         {
-            try
+            var parameters = $"https://finnhub.io/api/v1/quote?symbol={symbol.ToUpperInvariant()}";
+
+            HttpResponseMessage response = finnhubClient.GetAsync(parameters).Result;
+            if (!response.IsSuccessStatusCode)
             {
-                var parameters = $"https://finnhub.io/api/v1/quote?symbol={symbol.ToUpperInvariant()}";
-
-                HttpResponseMessage response = finnhubClient.GetAsync(parameters).Result;
-                if (!response.IsSuccessStatusCode)
-                {
-                    throw new Exception($"Status code: {response.StatusCode}");
-                }
-
-                Quote quote = response.Content.ReadFromJsonAsync<Quote>(serializerOptions).Result;
-
-                if (quote is null)
-                {
-                    throw new Exception("Quote was empty.");
-                }
-
-                return Ok(quote);
+                return BadRequest($"Status code: {response.StatusCode}");
             }
-            catch (Exception e)
+
+            Quote quote = response.Content.ReadFromJsonAsync<Quote>(serializerOptions).Result;
+
+            if (quote is null)
             {
-                return BadRequest($"Request failed. {e.Message}");
+                return BadRequest("Quote was empty.");
             }
+
+            return Ok(quote);
         }
 
         [HttpGet("{symbol}/candles")]
         public ActionResult Candles(string symbol, string resolution, DateTimeOffset from, DateTimeOffset to)
         {
-            try
+            string parameters = $"https://finnhub.io/api/v1/stock/candle?symbol={symbol.ToUpperInvariant()}" +
+                                $"&resolution={resolution}&from={from.ToUnixTimeSeconds()}&to={to.ToUnixTimeSeconds()}";
+
+            HttpResponseMessage response = finnhubClient.GetAsync(parameters).Result;
+            if (!response.IsSuccessStatusCode)
             {
-                string parameters = $"https://finnhub.io/api/v1/stock/candle?symbol={symbol.ToUpperInvariant()}" +
-                                    $"&resolution={resolution}&from={from.ToUnixTimeSeconds()}&to={to.ToUnixTimeSeconds()}";
-
-                HttpResponseMessage response = finnhubClient.GetAsync(parameters).Result;
-                if (!response.IsSuccessStatusCode)
-                {
-                    throw new Exception($"Status code: {response.StatusCode}");
-                }
-
-                Candles candles = response.Content.ReadFromJsonAsync<Candles>(serializerOptions).Result;
-
-                if (candles is null)
-                {
-                    throw new Exception("Candles are empty.");
-                }
-
-                return Ok(candles);
+                return BadRequest($"Status code: {response.StatusCode}");
             }
-            catch (Exception e)
+
+            Candles candles = response.Content.ReadFromJsonAsync<Candles>(serializerOptions).Result;
+
+            if (candles is null)
             {
-                return BadRequest($"Request failed. {e.Message}");
+                return BadRequest("Candles are empty.");
             }
+
+            return Ok(candles);
         }
 
-        private string GetExchangeAcronym(string exchange)
+        private static string GetExchangeAcronym(string exchange)
         {
             return exchange switch
             {

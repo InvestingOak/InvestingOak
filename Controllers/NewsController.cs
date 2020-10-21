@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text.Json;
@@ -39,27 +38,37 @@ namespace InvestingOak.Controllers
         }
 
         [HttpGet("{category}")]
-        public ActionResult MarketNews(string category, int minId = 0)
+        public ActionResult MarketNews(string category)
         {
-            try
+            var parameters = $"https://finnhub.io/api/v1/news?category={category}";
+
+            HttpResponseMessage response = finnhubClient.GetAsync(parameters).Result;
+            if (!response.IsSuccessStatusCode)
             {
-                var parameters = $"https://finnhub.io/api/v1/news?category={category}&minId={minId}";
-
-                HttpResponseMessage response = finnhubClient.GetAsync(parameters).Result;
-                if (!response.IsSuccessStatusCode)
-                {
-                    throw new Exception($"Status code: {response.StatusCode}");
-                }
-
-                List<NewsArticle> articles =
-                    response.Content.ReadFromJsonAsync<List<NewsArticle>>(serializerOptions).Result;
-
-                return Ok(articles);
+                return BadRequest($"Status code: {response.StatusCode}");
             }
-            catch (Exception e)
+
+            List<NewsArticle> articles =
+                response.Content.ReadFromJsonAsync<List<NewsArticle>>(serializerOptions).Result;
+
+            return Ok(articles);
+        }
+
+        [HttpGet("{category}")]
+        public ActionResult MarketNews(string category, int minId)
+        {
+            var parameters = $"https://finnhub.io/api/v1/news?category={category}&minId={minId}";
+
+            HttpResponseMessage response = finnhubClient.GetAsync(parameters).Result;
+            if (!response.IsSuccessStatusCode)
             {
-                return BadRequest($"Request failed. {e.Message}");
+                return BadRequest($"Status code: {response.StatusCode}");
             }
+
+            List<NewsArticle> articles =
+                response.Content.ReadFromJsonAsync<List<NewsArticle>>(serializerOptions).Result;
+
+            return Ok(articles);
         }
     }
 }
