@@ -1,5 +1,5 @@
 <div class="search-block">
-  <input (blur)="showSuggestions = false" (click)="showSuggestions = true"
+  <input #searchBar="ngModel" (blur)="showSuggestions = false" (click)="showSuggestions = true"
          (input)="suggest()" (keydown.enter)="onEnter()" [(ngModel)]="input" aria-label="Search"
          class="form-control flex-fill" placeholder="Search for a symbol or company" type="text">
   <ul *ngIf="showSuggestions && suggestions.length" class="search-suggestions nav">
