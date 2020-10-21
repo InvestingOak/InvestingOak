@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 
 namespace InvestingOak.Controllers
 {
-    public class OidcConfigurationController : Controller
+    public class OidcConfigurationController : ControllerBase
     {
         public OidcConfigurationController(IClientRequestParametersProvider clientRequestParametersProvider,
             ILogger<OidcConfigurationController> logger)
