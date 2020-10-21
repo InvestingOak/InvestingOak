@@ -22,10 +22,6 @@ export class StockSummaryComponent {
   public constructor(private finnhub: FinnhubService) {
   }
 
-  public getExchangeShort(name: string): string {
-    return this.finnhub.getExchangeAcronym(name);
-  }
-
   /**
    * Get change in price.
    * @param current Current price
