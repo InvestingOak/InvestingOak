@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {NewsSentiment, PriceTarget, Quote, RecommendationTrend} from '../../../finnhub/responses';
 import {Observable} from 'rxjs';
 import {FinnhubService} from '../../../finnhub/finnhub.service';
+import {NavigationEnd, Router} from '@angular/router';
 
 @Component({
   selector: 'app-stock-analysis',
@@ -15,11 +16,17 @@ export class StockAnalysisComponent implements OnInit {
   @Input()
   public quote$: Observable<Quote>;
 
-  public recommendations$: Observable<RecommendationTrend[]>;  // Analyst buy/sell ratings
+  public recommendation$: Observable<RecommendationTrend>;  // Analyst buy/sell ratings
   public priceTarget$: Observable<PriceTarget>;  // Analyst price targets
   public newsSentiment$: Observable<NewsSentiment>;  // Market sentiment from news
 
-  public constructor(private finnhub: FinnhubService) {
+  public constructor(private finnhub: FinnhubService, private router: Router) {
+    // Load data on page refresh (fixes navigating between symbols)
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.loadData();
+      }
+    });
   }
 
   public ngOnInit(): void {
@@ -167,7 +174,7 @@ export class StockAnalysisComponent implements OnInit {
    * @private
    */
   private loadData() {
-    this.recommendations$ = this.finnhub.recommendationTrends(this.symbol);
+    this.recommendation$ = this.finnhub.recommendation(this.symbol);
     this.priceTarget$ = this.finnhub.priceTarget(this.symbol);
     this.newsSentiment$ = this.finnhub.newsSentiment(this.symbol);
   }

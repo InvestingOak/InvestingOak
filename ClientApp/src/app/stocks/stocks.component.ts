@@ -3,7 +3,6 @@ import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {CompanyProfile2, News, Quote} from '../../finnhub/responses';
 import {Observable} from 'rxjs';
 import {FinnhubService} from '../../finnhub/finnhub.service';
-import {IdType} from '../../finnhub/idType';
 import {Title} from '@angular/platform-browser';
 
 @Component({
@@ -47,7 +46,7 @@ export class StocksComponent implements OnInit {
     this.quote$ = this.finnhub.quote(this.symbol);
 
     // Get some info about the company.
-    this.profile$ = this.finnhub.companyProfile2(IdType.Symbol, this.symbol);
+    this.profile$ = this.finnhub.companyProfile2(this.symbol);
 
     // Get company news since 30 days ago
     const today = new Date();

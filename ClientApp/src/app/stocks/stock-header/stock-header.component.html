@@ -3,10 +3,10 @@
   <div class="container d-flex flex-grow-1 p-3">
     <!-- Company name, symbol, and exchange -->
     <div class="flex-fill">
-      <h1 class="exchange-h d-inline-block">{{data.profile.name}}</h1>
+      <h1 class="exchange-h d-inline-block">{{data.profile?.name}}</h1>
       <div class="exchange d-inline-block ml-2">
         <p class="mb-0">{{symbol}}</p>
-        <p class="mb-0">{{getExchangeAcronym(data.profile.exchange)}}</p>
+        <p class="mb-0">{{data.profile?.exchange}}</p>
       </div>
     </div>
 
@@ -14,9 +14,9 @@
     <div class="d-flex">
       <div class="price d-inline-block mr-2">
         <h1 class="mb-0 text-center">
-          {{data.quote.c}}
+          {{data.quote?.c}}
         </h1>
-        <p *ngIf="getChange(data.quote.c, data.quote.pc) as change" class="mb-0 text-center">
+        <p *ngIf="getChange(data.quote?.c, data.quote?.pc) as change" class="mb-0 text-center">
           {{change.value >= 0 ? "+" : ''}}{{change.value | number:'1.2-2'}}
           ({{change.percent >= 0 ? "+" : ''}}{{change.percent | percent:'1.2-2'}})
         </p>
@@ -24,16 +24,16 @@
       <div class="price-changes d-inline-block ml-2">
         <div class="d-flex">
           <div>
-            <p class="mb-0">Open: {{data.quote.o | number:'1.2-2'}}</p>
-            <p class="mb-0">Prev: {{data.quote.pc | number:'1.2-2'}}</p>
+            <p class="mb-0">Open: {{data.quote?.o | number:'1.2-2'}}</p>
+            <p class="mb-0">Prev: {{data.quote?.pc | number:'1.2-2'}}</p>
           </div>
           <div class="ml-3">
-            <p class="mb-0">High: {{data.quote.h | number:'1.2-2'}}</p>
-            <p class="mb-0">Low: {{data.quote.l | number:'1.2-2'}}</p>
+            <p class="mb-0">High: {{data.quote?.h | number:'1.2-2'}}</p>
+            <p class="mb-0">Low: {{data.quote?.l | number:'1.2-2'}}</p>
           </div>
         </div>
         <p *ngIf="candles$ | async as candles" class="mb-0">
-          Volume: {{(candles.v[0] ? candles.v[candles.v.length - 1] : 0) | number}}
+          Volume: {{(candles?.v[0] ? candles.v[candles.v?.length - 1] : 0) | number}}
         </p>
       </div>
     </div>

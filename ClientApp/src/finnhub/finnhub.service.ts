@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {CompanyProfile2, News, NewsSentiment, PriceTarget, Quote, RecommendationTrend, StockCandles, StockSymbol} from './responses';
-import {IdType} from './idType';
 import {shareReplay} from 'rxjs/operators';
 
 @Injectable({
@@ -16,29 +15,12 @@ export class FinnhubService {
   public constructor(private http: HttpClient) {
   }
 
-  private static idTypeToString(idType: IdType): string {
-    switch (idType) {
-      case IdType.Symbol:
-        return 'symbol';
-      case IdType.Isin:
-        return 'isin';
-      case IdType.Cusip:
-        return 'cusip';
-    }
-  }
-
-  private static dateToISOString(date: Date): string {
-    return date.toISOString().split('T')[0].toString();
-  }
-
   /**
    * Get general information of a company. You can query by symbol, ISIN or CUSIP. This is the free version of Company Profile.
    * https://finnhub.io/docs/api#company-profile2
-   * @param idType
-   * @param value
    */
-  public companyProfile2(idType: IdType, value: string): Observable<CompanyProfile2> {
-    return this.http.get<CompanyProfile2>(`${this.baseUrl}/stock/profile2?${FinnhubService.idTypeToString(idType)}=${value}&token=${this.apiKey}`)
+  public companyProfile2(symbol: string): Observable<CompanyProfile2> {
+    return this.http.get<CompanyProfile2>(`/api/stocks/${symbol}/profile`)
       .pipe(shareReplay({bufferSize: 1, refCount: true}));
   }
 
@@ -48,7 +30,7 @@ export class FinnhubService {
    * @param exchange Exchange you want to get the list of symbols from.
    */
   public symbols(exchange: string): Observable<StockSymbol[]> {
-    return this.http.get<StockSymbol[]>(`${this.baseUrl}/stock/symbol?exchange=${exchange}&token=${this.apiKey}`)
+    return this.http.get<StockSymbol[]>(`/api/stocks?exchange=${exchange}`)
       .pipe(shareReplay({bufferSize: 1, refCount: true}));
   }
 
@@ -59,7 +41,7 @@ export class FinnhubService {
    * @param minId Use this field to get only news after this ID. Default to 0
    */
   public marketNews(category: 'general' | 'forex' | 'crypto' | 'merger', minId = 0): Observable<News[]> {
-    return this.http.get<News[]>(`${this.baseUrl}/news?category=${category}&minId=${minId}&token=${this.apiKey}`)
+    return this.http.get<News[]>(`api/news/${category}&minId=${minId}`)
       .pipe(shareReplay({bufferSize: 1, refCount: true}));
   }
 
@@ -71,9 +53,7 @@ export class FinnhubService {
    * @param to To date YYYY-MM-DD.
    */
   public companyNews(symbol: string, from: Date, to: Date): Observable<News[]> {
-    const fromStr = FinnhubService.dateToISOString(from);
-    const toStr = FinnhubService.dateToISOString(to);
-    return this.http.get<News[]>(`${this.baseUrl}/company-news?symbol=${symbol}&from=${fromStr}&to=${toStr}&token=${this.apiKey}`)
+    return this.http.get<News[]>(`api/stocks/${symbol}/news?from=${from.toUTCString()}&to=${to.toUTCString()}`)
       .pipe(shareReplay({bufferSize: 1, refCount: true}));
   }
 
@@ -83,17 +63,7 @@ export class FinnhubService {
    * @param symbol Company symbol.
    */
   public newsSentiment(symbol: string): Observable<NewsSentiment> {
-    return this.http.get<NewsSentiment>(`${this.baseUrl}/news-sentiment?symbol=${symbol}&token=${this.apiKey}`)
-      .pipe(shareReplay({bufferSize: 1, refCount: true}));
-  }
-
-  /**
-   * Get company peers. Return a list of peers in the same country and GICS sub-industry
-   * https://finnhub.io/docs/api#company-peers
-   * @param symbol Company symbol.
-   */
-  public peers(symbol: string): Observable<string[]> {
-    return this.http.get<string[]>(`${this.baseUrl}/stock/peers?symbol=${symbol}&token=${this.apiKey}`)
+    return this.http.get<NewsSentiment>(`api/stocks/${symbol}/sentiment`)
       .pipe(shareReplay({bufferSize: 1, refCount: true}));
   }
 
@@ -102,8 +72,8 @@ export class FinnhubService {
    * https://finnhub.io/docs/api#recommendation-trends
    * @param symbol Company symbol.
    */
-  public recommendationTrends(symbol: string): Observable<RecommendationTrend[]> {
-    return this.http.get<RecommendationTrend[]>(`${this.baseUrl}/stock/recommendation?symbol=${symbol}&token=${this.apiKey}`)
+  public recommendation(symbol: string): Observable<RecommendationTrend> {
+    return this.http.get<RecommendationTrend>(`api/stocks/${symbol}/recommendation`)
       .pipe(shareReplay({bufferSize: 1, refCount: true}));
   }
 
@@ -113,7 +83,7 @@ export class FinnhubService {
    * @param symbol Company symbol.
    */
   public priceTarget(symbol: string): Observable<PriceTarget> {
-    return this.http.get<PriceTarget>(`${this.baseUrl}/stock/price-target?symbol=${symbol}&token=${this.apiKey}`)
+    return this.http.get<PriceTarget>(`api/stocks/${symbol}/pricetarget`)
       .pipe(shareReplay({bufferSize: 1, refCount: true}));
   }
 
@@ -124,7 +94,7 @@ export class FinnhubService {
    * @param symbol Company symbol.
    */
   public quote(symbol: string): Observable<Quote> {
-    return this.http.get<Quote>(`${this.baseUrl}/quote?symbol=${symbol}&token=${this.apiKey}`)
+    return this.http.get<Quote>(`api/stocks/${symbol}/quote`)
       .pipe(shareReplay({bufferSize: 1, refCount: true}));
   }
 
@@ -137,29 +107,7 @@ export class FinnhubService {
    */
   public stockCandles(symbol: string, resolution: '1' | '5' | '15' | '30' | '60' | 'D' | 'W' | 'M',
                       from: Date, to: Date): Observable<StockCandles> {
-    const fromStr = from.getTime() / 1000 | 0;
-    const toStr = to.getTime() / 1000 | 0;
-    console.log(`${this.baseUrl}/stock/candle?symbol=${symbol}&resolution=${resolution}&from=${fromStr}&to=${toStr}&token=${this.apiKey}`);
-    return this.http.get<StockCandles>(`${this.baseUrl}/stock/candle?symbol=${symbol}&resolution=${resolution}&from=${fromStr}&to=${toStr}&token=${this.apiKey}`)
+    return this.http.get<StockCandles>(`api/stocks/${symbol}/candles?resolution=${resolution}&from=${from.toUTCString()}&to=${to.toUTCString()}`)
       .pipe(shareReplay({bufferSize: 1, refCount: true}));
-  }
-
-  /**
-   * Returns an exchange's acronym for full name.
-   * @param exchange
-   */
-  public getExchangeAcronym(exchange: string): string {
-    switch (exchange) {
-      case 'NASDAQ NMS - GLOBAL MARKET':
-        return 'NASDAQ';
-      case 'NEW YORK STOCK EXCHANGE, INC.':
-        return 'NYSE';
-      case 'NYSE MKT LLC':
-        return 'AMEX';
-      case 'OTC MARKETS':
-        return 'OTC';
-      default:
-        return exchange;
-    }
   }
 }
