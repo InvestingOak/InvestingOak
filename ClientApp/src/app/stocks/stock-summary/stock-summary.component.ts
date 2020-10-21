@@ -1,7 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {Observable} from 'rxjs';
 import {CompanyProfile2, Quote} from '../../../finnhub/responses';
-import {FinnhubService} from '../../../finnhub/finnhub.service';
 
 @Component({
   selector: 'app-stock-summary',
@@ -18,9 +17,6 @@ export class StockSummaryComponent {
 
   @Input()
   public quote$: Observable<Quote>; // Stock quote from API
-
-  public constructor(private finnhub: FinnhubService) {
-  }
 
   /**
    * Get change in price.
