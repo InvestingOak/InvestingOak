@@ -15,7 +15,6 @@ namespace InvestingOak.Controllers
     public class NewsController : ControllerBase
     {
         private const string FinnhubKey = "btt5puv48v6q0kg1m610";
-        private const string FinnhubBaseUrl = "https://finnhub.io/api/v1";
         private readonly HttpClient finnhubClient;
         private readonly JsonSerializerOptions serializerOptions;
 
