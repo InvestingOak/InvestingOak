@@ -18,6 +18,7 @@ import {StockHeaderComponent} from './stocks/stock-header/stock-header.component
 import {StockSummaryComponent} from './stocks/stock-summary/stock-summary.component';
 import {StockAnalysisComponent} from './stocks/stock-analysis/stock-analysis.component';
 import {SearchComponent} from './nav-menu/search/search.component';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import {SearchComponent} from './nav-menu/search/search.component';
     FontAwesomeModule,
     NgbModule,
     TradingViewModule,
+    FormsModule,
   ],
   providers: [
     FinnhubService,

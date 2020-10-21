@@ -35,10 +35,6 @@ export class StockHeaderComponent implements OnInit {
     this.loadData();
   }
 
-  public getExchangeAcronym(name: string): string {
-    return this.finnhub.getExchangeAcronym(name);
-  }
-
   /**
    * Get change in price.
    * @param current Current price

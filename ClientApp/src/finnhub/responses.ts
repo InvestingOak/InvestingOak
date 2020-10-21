@@ -74,6 +74,7 @@ export interface Quote {
   l: number;
   c: number;
   pc: number;
+  t: number;
 }
 
 export interface StockCandles {

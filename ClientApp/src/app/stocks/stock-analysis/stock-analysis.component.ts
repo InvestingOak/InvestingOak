@@ -15,7 +15,7 @@ export class StockAnalysisComponent implements OnInit {
   @Input()
   public quote$: Observable<Quote>;
 
-  public recommendations$: Observable<RecommendationTrend[]>;  // Analyst buy/sell ratings
+  public recommendation$: Observable<RecommendationTrend>;  // Analyst buy/sell ratings
   public priceTarget$: Observable<PriceTarget>;  // Analyst price targets
   public newsSentiment$: Observable<NewsSentiment>;  // Market sentiment from news
 
@@ -167,7 +167,7 @@ export class StockAnalysisComponent implements OnInit {
    * @private
    */
   private loadData() {
-    this.recommendations$ = this.finnhub.recommendationTrends(this.symbol);
+    this.recommendation$ = this.finnhub.recommendation(this.symbol);
     this.priceTarget$ = this.finnhub.priceTarget(this.symbol);
     this.newsSentiment$ = this.finnhub.newsSentiment(this.symbol);
   }
