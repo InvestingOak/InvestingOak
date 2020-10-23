@@ -7,12 +7,12 @@
       <hr class="mt-0">
       <div class="d-flex">
         <div class="news-thumbnail text-center">
-          <img alt="{{article.headline}}" src="{{article.image}}">
+          <img alt="{{article.headline}}" src="{{article.imageUrl}}">
         </div>
         <div class="ml-3">
           <h5>{{article.headline}}</h5>
           <p class="article-summary">{{article.summary}}</p>
-          <p class="source"><small>{{article.source}} <strong>&middot;</strong> {{getAge(article.datetime)}}</small></p>
+          <p class="source"><small>{{article.source}} <strong>&middot;</strong> {{getAge(article.dateTime)}}</small></p>
         </div>
       </div>
     </a>
@@ -23,11 +23,12 @@
        class="news-block d-inline-block mb-3" href="{{article.url}}">
       <hr class="mt-0">
       <div class="news-thumbnail float-left text-center pr-3">
-        <img alt="{{article.headline}}" src="{{article.image}}">
+        <img alt="{{article.headline}}" src="{{article.imageUrl}}">
       </div>
       <div>
         <h5>({{article.source}}) {{article.headline}}</h5>
         <p class="article-summary">{{article.summary}}</p>
+        <p class="source"><small>{{article.source}} <strong>&middot;</strong> {{getAge(article.dateTime)}}</small></p>
       </div>
     </a>
   </div>

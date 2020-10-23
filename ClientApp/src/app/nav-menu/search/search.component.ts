@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {faSearch} from '@fortawesome/free-solid-svg-icons';
 import {Observable} from 'rxjs';
-import {StockSymbol} from '../../../finnhub/responses';
+import {StockSymbol} from '../../../stock-data/responses';
 import {Router} from '@angular/router';
-import {FinnhubService} from '../../../finnhub/finnhub.service';
+import {StockDataService} from '../../../stock-data/stock-data.service';
 import * as _ from 'underscore';
 
 @Component({
@@ -20,16 +20,16 @@ export class SearchComponent implements OnInit {
   public numberSuggestions = 4;
   public input = '';
 
-  public constructor(public router: Router, private finnhub: FinnhubService) {
+  public constructor(public router: Router, private dataService: StockDataService) {
   }
 
   public ngOnInit(): void {
-    this.symbols$ = this.finnhub.symbols('US');
+    this.symbols$ = this.dataService.symbols('US');
   }
 
   public suggest(): void {
     if (!this.input) {
-      this.suggestions = [];
+      this.reset();
       return;
     }
 
@@ -59,6 +59,14 @@ export class SearchComponent implements OnInit {
     }
 
     const symbol = this.suggestions[0].symbol;
-    this.router.navigate(['stocks', symbol]).then();
+    this.router.navigate(['stocks', symbol]).then(() => {
+      this.reset();
+    });
+  }
+
+  private reset(): void {
+    this.input = '';
+    this.suggestions = [];
+    this.showSuggestions = false;
   }
 }

@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {NewsSentiment, PriceTarget, Quote, RecommendationTrend} from '../../../finnhub/responses';
+import {NewsSentiment, PriceTarget, Quote, Recommendations} from '../../../stock-data/responses';
 import {Observable} from 'rxjs';
-import {FinnhubService} from '../../../finnhub/finnhub.service';
+import {StockDataService} from '../../../stock-data/stock-data.service';
 import {NavigationEnd, Router} from '@angular/router';
 
 @Component({
@@ -16,11 +16,11 @@ export class StockAnalysisComponent implements OnInit {
   @Input()
   public quote$: Observable<Quote>;
 
-  public recommendation$: Observable<RecommendationTrend>;  // Analyst buy/sell ratings
+  public recommendation$: Observable<Recommendations>;  // Analyst buy/sell ratings
   public priceTarget$: Observable<PriceTarget>;  // Analyst price targets
   public newsSentiment$: Observable<NewsSentiment>;  // Market sentiment from news
 
-  public constructor(private finnhub: FinnhubService, private router: Router) {
+  public constructor(private dataService: StockDataService, private router: Router) {
     // Load data on page refresh (fixes navigating between symbols)
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
@@ -38,7 +38,7 @@ export class StockAnalysisComponent implements OnInit {
    * Generate a buy/sell rating based on analyst ratings.
    * @param recommendations Analyst ratings
    */
-  public getMajorityRecommendation(recommendations: RecommendationTrend): string {
+  public getMajorityRecommendation(recommendations: Recommendations): string {
     const totalBuys = recommendations.strongBuy + recommendations.buy;
     const totalSells = recommendations.strongSell + recommendations.sell;
     const holds = recommendations.hold;
@@ -108,7 +108,7 @@ export class StockAnalysisComponent implements OnInit {
    * Returns the total number of analyst recommendations.
    * @param recommendations Analyst recommendations
    */
-  public getRecommendationCount(recommendations: RecommendationTrend): number {
+  public getRecommendationCount(recommendations: Recommendations): number {
     return recommendations.strongBuy + recommendations.buy +
       recommendations.hold + recommendations.sell + recommendations.strongSell;
   }
@@ -174,8 +174,8 @@ export class StockAnalysisComponent implements OnInit {
    * @private
    */
   private loadData() {
-    this.recommendation$ = this.finnhub.recommendation(this.symbol);
-    this.priceTarget$ = this.finnhub.priceTarget(this.symbol);
-    this.newsSentiment$ = this.finnhub.newsSentiment(this.symbol);
+    this.recommendation$ = this.dataService.recommendation(this.symbol);
+    this.priceTarget$ = this.dataService.priceTarget(this.symbol);
+    this.newsSentiment$ = this.dataService.newsSentiment(this.symbol);
   }
 }

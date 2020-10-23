@@ -4,9 +4,11 @@
     <!-- Company name, symbol, and exchange -->
     <div class="flex-fill">
       <h1 class="exchange-h d-inline-block">{{data.profile?.name}}</h1>
-      <div class="exchange d-inline-block ml-2">
+      <div class="exchange d-inline-block ml-2" ngbTooltip="Data may be delayed up to 15 minutes." placement="right">
         <p class="mb-0">{{symbol}}</p>
-        <p class="mb-0">{{data.profile?.exchange}}</p>
+        <p class="mb-0">{{data.profile?.exchange}}
+          <small class="text-warning">&#x2666;</small>
+        </p>
       </div>
     </div>
 
@@ -14,9 +16,9 @@
     <div class="d-flex">
       <div class="price d-inline-block mr-2">
         <h1 class="mb-0 text-center">
-          {{data.quote?.c}}
+          {{data.quote?.close | number:'1.2-2'}}
         </h1>
-        <p *ngIf="getChange(data.quote?.c, data.quote?.pc) as change" class="mb-0 text-center">
+        <p *ngIf="getChange(data.quote?.close, data.quote?.previousClose) as change" class="mb-0 text-center">
           {{change.value >= 0 ? "+" : ''}}{{change.value | number:'1.2-2'}}
           ({{change.percent >= 0 ? "+" : ''}}{{change.percent | percent:'1.2-2'}})
         </p>
@@ -24,17 +26,15 @@
       <div class="price-changes d-inline-block ml-2">
         <div class="d-flex">
           <div>
-            <p class="mb-0">Open: {{data.quote?.o | number:'1.2-2'}}</p>
-            <p class="mb-0">Prev: {{data.quote?.pc | number:'1.2-2'}}</p>
+            <p class="mb-0">Open: {{data.quote?.open | number:'1.2-2'}}</p>
+            <p class="mb-0">Prev: {{data.quote?.previousClose | number:'1.2-2'}}</p>
           </div>
           <div class="ml-3">
-            <p class="mb-0">High: {{data.quote?.h | number:'1.2-2'}}</p>
-            <p class="mb-0">Low: {{data.quote?.l | number:'1.2-2'}}</p>
+            <p class="mb-0">High: {{data.quote?.high | number:'1.2-2'}}</p>
+            <p class="mb-0">Low: {{data.quote?.low | number:'1.2-2'}}</p>
           </div>
         </div>
-        <p *ngIf="candles$ | async as candles" class="mb-0">
-          Volume: {{(candles?.v[0] ? candles.v[candles.v?.length - 1] : 0) | number}}
-        </p>
+        <p class="mb-0">Volume: {{data.quote?.volume | number}}</p>
       </div>
     </div>
   </div>

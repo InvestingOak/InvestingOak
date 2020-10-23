@@ -18,7 +18,7 @@
   <div *ngIf="priceTarget$ | async as priceTarget" class="col">
     <h3 *ngIf="quote$ | async as quote">
       Price Target:
-      <span class="badge badge-{{getTargetColor(priceTarget.targetMedian, quote.c)}}">
+      <span class="badge badge-{{getTargetColor(priceTarget.targetMedian, quote.close)}}">
         {{priceTarget.targetMedian}}
       </span>
     </h3>
@@ -32,7 +32,7 @@
   <!-- News sentiment -->
   <div *ngIf="newsSentiment$ | async as newsSentiment" class="col">
     <h3
-      *ngIf="{value: getSentiment(newsSentiment.companyNewsScore, newsSentiment.sectorAverageNewsScore, newsSentiment.sentiment.bullishPercent)} as sentiment">
+      *ngIf="{value: getSentiment(newsSentiment.companyNewsScore, newsSentiment.sectorAverageNewsScore, newsSentiment.bullishPercent)} as sentiment">
       Sentiment:
       <span class="badge badge-{{getSentimentColor(sentiment.value)}}">
         {{getSentimentString(sentiment.value)}}
@@ -41,8 +41,8 @@
     <div class="exchange">
       <p class="mb-0"><strong>{{symbol}} Score:</strong> {{newsSentiment.companyNewsScore | percent}}</p>
       <p class="mb-0"><strong>Sector Average:</strong> {{newsSentiment.sectorAverageNewsScore | percent}}</p>
-      <p class="mb-0"><strong>Bullish:</strong> {{newsSentiment.sentiment.bullishPercent | percent}}</p>
-      <p class="mb-0"><strong>Bearish:</strong> {{newsSentiment.sentiment.bearishPercent | percent}}</p>
+      <p class="mb-0"><strong>Bullish:</strong> {{newsSentiment.bullishPercent | percent}}</p>
+      <p class="mb-0"><strong>Bearish:</strong> {{newsSentiment.bearishPercent | percent}}</p>
     </div>
   </div>
 </div>

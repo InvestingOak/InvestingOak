@@ -1,7 +1,5 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {CompanyProfile2, Quote, StockCandles} from '../../../finnhub/responses';
-import {NavigationEnd, Router} from '@angular/router';
-import {FinnhubService} from '../../../finnhub/finnhub.service';
+import {Component, Input} from '@angular/core';
+import {CompanyProfile, Quote} from '../../../stock-data/responses';
 import {Observable} from 'rxjs';
 
 @Component({
@@ -9,31 +7,16 @@ import {Observable} from 'rxjs';
   templateUrl: './stock-header.component.html',
   styleUrls: ['./stock-header.component.scss']
 })
-export class StockHeaderComponent implements OnInit {
+export class StockHeaderComponent {
 
   @Input()
   public symbol: string;  // The stock symbol
 
   @Input()
-  public profile$: Observable<CompanyProfile2>;  // Company profile
+  public profile$: Observable<CompanyProfile>;  // Company profile
 
   @Input()
   public quote$: Observable<Quote>; // Stock quote from API
-
-  public candles$: Observable<StockCandles>; // Latest candle
-
-  public constructor(private finnhub: FinnhubService, private router: Router) {
-    // Load data on page refresh (fixes navigating between symbols)
-    this.router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-        this.loadData();
-      }
-    });
-  }
-
-  public ngOnInit(): void {
-    this.loadData();
-  }
 
   /**
    * Get change in price.
@@ -45,16 +28,5 @@ export class StockHeaderComponent implements OnInit {
     const percent = change / previous;
 
     return {value: change, percent: percent};
-  }
-
-  /**
-   * Load stock data from APIs
-   * @private
-   */
-  private loadData(): void {
-    // Get chart candles from the last 3 days.
-    const today = new Date();
-    const daysAgo = new Date(new Date().setDate(today.getDate() - 3));
-    this.candles$ = this.finnhub.stockCandles(this.symbol, 'D', daysAgo, today);
   }
 }

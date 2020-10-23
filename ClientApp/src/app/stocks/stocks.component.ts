@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
-import {CompanyProfile2, News, Quote} from '../../finnhub/responses';
 import {Observable} from 'rxjs';
-import {FinnhubService} from '../../finnhub/finnhub.service';
+import {StockDataService} from '../../stock-data/stock-data.service';
 import {Title} from '@angular/platform-browser';
+import {CompanyProfile, News, Quote} from '../../stock-data/responses';
 
 @Component({
   selector: 'app-stocks',
@@ -14,10 +14,10 @@ export class StocksComponent implements OnInit {
   public symbol: string;  // The stock symbol
 
   public quote$: Observable<Quote>;    // Stock quote from API
-  public profile$: Observable<CompanyProfile2>;  // Company profile
+  public profile$: Observable<CompanyProfile>;  // Company profile
   public companyNews$: Observable<News[]>;  // News source from API
 
-  public constructor(private finnhub: FinnhubService, private route: ActivatedRoute,
+  public constructor(private dataService: StockDataService, private route: ActivatedRoute,
                      private router: Router, private titleService: Title) {
     // Load data on page refresh (fixes navigating between symbols)
     this.router.events.subscribe(event => {
@@ -43,14 +43,14 @@ export class StocksComponent implements OnInit {
     this.symbol = this.route.snapshot.paramMap.get('symbol');
 
     // Get stock quote including open, close, high, low, and previous close prices.
-    this.quote$ = this.finnhub.quote(this.symbol);
+    this.quote$ = this.dataService.quote(this.symbol);
 
     // Get some info about the company.
-    this.profile$ = this.finnhub.companyProfile2(this.symbol);
+    this.profile$ = this.dataService.companyProfile(this.symbol);
 
     // Get company news since 30 days ago
     const today = new Date();
     const daysAgo = new Date(new Date().setDate(today.getDate() - 30));
-    this.companyNews$ = this.finnhub.companyNews(this.symbol, daysAgo, today);
+    this.companyNews$ = this.dataService.companyNews(this.symbol, daysAgo, today);
   }
 }
