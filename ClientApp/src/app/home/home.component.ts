@@ -12,11 +12,11 @@ export class HomeComponent implements OnInit {
 
   public marketNews: Observable<News[]>;
 
-  public constructor(private finnhub: StockDataService, private title: Title) {
+  public constructor(private dataService: StockDataService, private title: Title) {
   }
 
   public ngOnInit(): void {
     this.title.setTitle('InvestingOak');
-    this.marketNews = this.finnhub.marketNews('general');
+    this.marketNews = this.dataService.marketNews('general');
   }
 }

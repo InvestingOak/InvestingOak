@@ -20,7 +20,7 @@ export class StockAnalysisComponent implements OnInit {
   public priceTarget$: Observable<PriceTarget>;  // Analyst price targets
   public newsSentiment$: Observable<NewsSentiment>;  // Market sentiment from news
 
-  public constructor(private finnhub: StockDataService, private router: Router) {
+  public constructor(private dataService: StockDataService, private router: Router) {
     // Load data on page refresh (fixes navigating between symbols)
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
@@ -174,8 +174,8 @@ export class StockAnalysisComponent implements OnInit {
    * @private
    */
   private loadData() {
-    this.recommendation$ = this.finnhub.recommendation(this.symbol);
-    this.priceTarget$ = this.finnhub.priceTarget(this.symbol);
-    this.newsSentiment$ = this.finnhub.newsSentiment(this.symbol);
+    this.recommendation$ = this.dataService.recommendation(this.symbol);
+    this.priceTarget$ = this.dataService.priceTarget(this.symbol);
+    this.newsSentiment$ = this.dataService.newsSentiment(this.symbol);
   }
 }

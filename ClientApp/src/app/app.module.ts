@@ -41,7 +41,7 @@ import {FormsModule} from '@angular/forms';
     FontAwesomeModule,
     NgbModule,
     TradingViewModule,
-    FormsModule,
+    FormsModule
   ],
   providers: [
     StockDataService,

@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InvestingOak.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201023205059_InitialCreate")]
+    [Migration("20201023215527_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

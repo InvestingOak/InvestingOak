@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {CompanyProfile, News, NewsSentiment, PriceTarget, Quote, Recommendations, StockSymbol} from './responses';
-import {shareReplay} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -25,8 +24,7 @@ export class StockDataService {
   }
 
   public companyNews(symbol: string, from: Date, to: Date): Observable<News[]> {
-    return this.http.get<News[]>(`api/stocks/${symbol}/news?from=${from.toUTCString()}&to=${to.toUTCString()}`)
-      .pipe(shareReplay({bufferSize: 1, refCount: true}));
+    return this.http.get<News[]>(`api/stocks/${symbol}/news?from=${from.toUTCString()}&to=${to.toUTCString()}`);
   }
 
   public newsSentiment(symbol: string): Observable<NewsSentiment> {

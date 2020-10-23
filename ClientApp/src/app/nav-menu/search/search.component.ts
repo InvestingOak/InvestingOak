@@ -20,11 +20,11 @@ export class SearchComponent implements OnInit {
   public numberSuggestions = 4;
   public input = '';
 
-  public constructor(public router: Router, private finnhub: StockDataService) {
+  public constructor(public router: Router, private dataService: StockDataService) {
   }
 
   public ngOnInit(): void {
-    this.symbols$ = this.finnhub.symbols('US');
+    this.symbols$ = this.dataService.symbols('US');
   }
 
   public suggest(): void {
