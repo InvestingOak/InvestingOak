@@ -26,6 +26,7 @@ export class SymbolOverviewComponent implements AfterViewInit {
   }
 
   public ngAfterViewInit(): void {
+
     const params = {
       symbols: [[`this.name`, `${this.exchange}:${this.symbol}|${this.period}`]],
       chartOnly: true,

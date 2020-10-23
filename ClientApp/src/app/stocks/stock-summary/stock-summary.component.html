@@ -2,7 +2,7 @@
   <!-- Stock chart using TradingView -->
   <div *ngIf="quote$ | async as quote" class="col chart">
     <app-symbol-overview exchange="{{profile.exchange}}" name="{{profile.name}}"
-                         period="1D" red="{{getChange(quote.c, quote.pc) < 0}}" symbol="{{symbol}}">
+                         period="1D" red="{{getChange(quote.close, quote.previousClose) < 0}}" symbol="{{symbol}}">
     </app-symbol-overview>
   </div>
 
@@ -10,22 +10,12 @@
   <div class="col-4">
     <h5>About {{profile.name}}</h5>
     <p>
-      <a href="{{profile.weburl}}">{{profile.weburl}}</a><br>
-      <strong>Sector:</strong> Sector here<br>
-      <strong>Industry:</strong> Industry here<br>
-      <strong>Employees:</strong> Number of employees here
+      <a href="{{profile.webUrl}}">{{profile.webUrl}}</a><br>
+      <strong>Sector:</strong> {{profile.sector}}<br>
+      <strong>Industry:</strong> {{profile.industry}}<br>
+      <strong>Employees:</strong> {{profile.fullTimeEmployees}}
     </p>
-    <p #read class="read read-less mb-1">
-      Description here. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-      incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-      laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
-      esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
-      qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-      sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-      exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit
-      in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-      proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-    </p>
+    <p #read class="read read-less mb-1">{{profile.description}}</p>
     <a #readMore (click)="onReadMore(read, readMore)" class="read-more text-center d-block">Read more</a>
   </div>
 </div>

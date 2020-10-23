@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {FinnhubService} from '../../finnhub/finnhub.service';
-import {News} from '../../finnhub/responses';
+import {StockDataService} from '../../stock-data/stock-data.service';
+import {News} from '../../stock-data/responses';
 import {Observable} from 'rxjs';
 import {Title} from '@angular/platform-browser';
 
@@ -12,7 +12,7 @@ export class HomeComponent implements OnInit {
 
   public marketNews: Observable<News[]>;
 
-  public constructor(private finnhub: FinnhubService, private title: Title) {
+  public constructor(private finnhub: StockDataService, private title: Title) {
   }
 
   public ngOnInit(): void {

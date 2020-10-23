@@ -1,11 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text.Json;
+using AutoMapper;
 using InvestingOak.Converters;
+using InvestingOak.Data;
+using InvestingOak.Data.Entities;
+using InvestingOak.Models;
 using InvestingOak.Models.Finnhub;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using FinnhubStockSymbol = InvestingOak.Models.Finnhub.StockSymbol;
+using FinnhubArticle = InvestingOak.Models.Finnhub.NewsArticle;
+using NewsArticle = InvestingOak.Data.Entities.NewsArticle;
+using Quote = InvestingOak.Data.Entities.Quote;
+using Sentiment = InvestingOak.Data.Entities.Sentiment;
+using StockSymbol = InvestingOak.Data.Entities.StockSymbol;
 
 namespace InvestingOak.Controllers
 {
@@ -15,15 +27,24 @@ namespace InvestingOak.Controllers
     [ResponseCache(VaryByHeader = "User-Agent", Duration = 30)]
     public class StockController : ControllerBase
     {
-        private const string FinnhubKey = "btt5puv48v6q0kg1m610";
+        private readonly HttpClient alphaVantageClient;
+        private readonly string alphaVantageKey;
         private readonly HttpClient finnhubClient;
+        private readonly IMapper mapper;
+        private readonly IRepository repository;
         private readonly JsonSerializerOptions serializerOptions;
 
-        public StockController()
+        public StockController(IRepository repository, IMapper mapper, IConfiguration configuration)
         {
+            this.repository = repository;
+            this.mapper = mapper;
+
             // Configure HttpClients
+            alphaVantageKey = configuration["Keys:AlphaVantage"];
+            alphaVantageClient = new HttpClient();
+            string finnhubKey = configuration["Keys:Finnhub"];
             finnhubClient = new HttpClient();
-            finnhubClient.DefaultRequestHeaders.Add("X-Finnhub-Token", FinnhubKey);
+            finnhubClient.DefaultRequestHeaders.Add("X-Finnhub-Token", finnhubKey);
 
             // Configure JsonSerializer
             serializerOptions = new JsonSerializerOptions
@@ -42,7 +63,16 @@ namespace InvestingOak.Controllers
         [HttpGet]
         public ActionResult Symbols(string exchange)
         {
-            var parameters = $"https://finnhub.io/api/v1/stock/symbol?exchange={exchange.ToUpperInvariant()}";
+            exchange = exchange.ToUpperInvariant();
+
+            SymbolList symbolList = repository.GetSymbolList(exchange);
+
+            if (symbolList is not null && !symbolList.IsStale(1440))
+            {
+                return Ok(symbolList.Symbols);
+            }
+
+            var parameters = $"https://finnhub.io/api/v1/stock/symbol?exchange={exchange}";
 
             HttpResponseMessage response = finnhubClient.GetAsync(parameters).Result;
             if (!response.IsSuccessStatusCode)
@@ -50,31 +80,81 @@ namespace InvestingOak.Controllers
                 return BadRequest($"Status code: {response.StatusCode}");
             }
 
-            List<StockSymbol> stockSymbol =
-                response.Content.ReadFromJsonAsync<List<StockSymbol>>(serializerOptions).Result;
+            List<FinnhubStockSymbol> stockSymbols =
+                response.Content.ReadFromJsonAsync<List<FinnhubStockSymbol>>(serializerOptions).Result;
 
-            return Ok(stockSymbol);
+            bool shouldAdd = symbolList is null;
+
+            symbolList = new SymbolList
+            {
+                Exchange = exchange,
+                Symbols = mapper.Map<List<StockSymbol>>(stockSymbols),
+                LastUpdated = DateTimeOffset.UtcNow
+            };
+
+            if (shouldAdd)
+            {
+                repository.AddEntity(symbolList);
+            }
+
+            repository.SaveAll();
+
+            return Ok(symbolList.Symbols);
         }
 
         [HttpGet("{symbol}/profile")]
         public ActionResult Profile(string symbol)
         {
-            var parameters = $"https://finnhub.io/api/v1/stock/profile2?symbol={symbol.ToUpperInvariant()}";
+            symbol = symbol.ToUpperInvariant();
+            CompanyProfile profile = repository.GetCompanyProfile(symbol);
 
-            HttpResponseMessage response = finnhubClient.GetAsync(parameters).Result;
+            if (profile is not null && !profile.IsStale(1440))
+            {
+                return Ok(profile);
+            }
+
+            var parameters =
+                $"https://www.alphavantage.co/query?function=OVERVIEW&symbol={symbol}&apikey={alphaVantageKey}";
+            HttpResponseMessage response = alphaVantageClient.GetAsync(parameters).Result;
             if (!response.IsSuccessStatusCode)
             {
                 return BadRequest($"Status code: {response.StatusCode}");
             }
 
-            CompanyProfile2 profile = response.Content.ReadFromJsonAsync<CompanyProfile2>(serializerOptions).Result;
-
-            if (profile?.Ticker is null)
+            StockOverviewInput aProfile =
+                response.Content.ReadFromJsonAsync<StockOverviewInput>(serializerOptions).Result;
+            if (aProfile is null)
             {
-                return BadRequest("Symbol is invalid or profile does not exist.");
+                return BadRequest("Failed to get company profile.");
             }
 
-            profile.Exchange = GetExchangeAcronym(profile.Exchange);
+            parameters = $"https://finnhub.io/api/v1/stock/profile2?symbol={symbol}";
+            response = finnhubClient.GetAsync(parameters).Result;
+            if (!response.IsSuccessStatusCode)
+            {
+                return BadRequest($"Status code: {response.StatusCode}");
+            }
+
+            CompanyProfile2 fProfile = response.Content.ReadFromJsonAsync<CompanyProfile2>(serializerOptions).Result;
+
+            if (fProfile?.Ticker is null)
+            {
+                return BadRequest("Failed to get company profile.");
+            }
+
+            bool shouldAdd = profile is null;
+
+            profile = mapper.Map<CompanyProfile>(aProfile);
+            profile.LogoUrl = fProfile.LogoUrl;
+            profile.WebUrl = fProfile.WebUrl;
+            profile.LastUpdated = DateTimeOffset.UtcNow;
+
+            if (shouldAdd)
+            {
+                repository.AddEntity(profile);
+            }
+
+            repository.SaveAll();
 
             return Ok(profile);
         }
@@ -82,7 +162,15 @@ namespace InvestingOak.Controllers
         [HttpGet("{symbol}/sentiment")]
         public ActionResult Sentiment(string symbol)
         {
-            var parameters = $"https://finnhub.io/api/v1/news-sentiment?symbol={symbol.ToUpperInvariant()}";
+            symbol = symbol.ToUpperInvariant();
+            Sentiment sentiment = repository.GetSentiment(symbol);
+
+            if (sentiment is not null && !sentiment.IsStale(1440))
+            {
+                return Ok(sentiment);
+            }
+
+            var parameters = $"https://finnhub.io/api/v1/news-sentiment?symbol={symbol}";
 
             HttpResponseMessage response = finnhubClient.GetAsync(parameters).Result;
             if (!response.IsSuccessStatusCode)
@@ -90,12 +178,24 @@ namespace InvestingOak.Controllers
                 return BadRequest($"Status code: {response.StatusCode}");
             }
 
-            NewsSentiment sentiment = response.Content.ReadFromJsonAsync<NewsSentiment>(serializerOptions).Result;
+            NewsSentiment newsSentiment = response.Content.ReadFromJsonAsync<NewsSentiment>(serializerOptions).Result;
 
-            if (sentiment?.Symbol is null)
+            if (newsSentiment?.Symbol is null)
             {
                 return BadRequest("Symbol is invalid or news sentiment does not exist.");
             }
+
+            bool shouldAdd = sentiment is null;
+
+            sentiment = mapper.Map<Sentiment>(newsSentiment);
+            sentiment.LastUpdated = DateTimeOffset.UtcNow;
+
+            if (shouldAdd)
+            {
+                repository.AddEntity(sentiment);
+            }
+
+            repository.SaveAll();
 
             return Ok(sentiment);
         }
@@ -103,10 +203,23 @@ namespace InvestingOak.Controllers
         [HttpGet("{symbol}/news")]
         public ActionResult News(string symbol, DateTimeOffset from, DateTimeOffset to)
         {
+            symbol = symbol.ToUpperInvariant();
+            ArticleList articleList = repository.GetNewsArticles("company", symbol);
+
+            if (articleList is not null && !articleList.IsStale(15))
+            {
+                IEnumerable<NewsArticle> ret = articleList.Articles.Where(a =>
+                {
+                    DateTimeOffset dto = DateTimeOffset.FromUnixTimeSeconds(a.DateTime);
+                    return dto >= from && dto <= to;
+                });
+                return Ok(ret);
+            }
+
             var fromStr = from.ToString("yyyy-MM-dd");
             var toStr = to.ToString("yyyy-MM-dd");
             var parameters =
-                $"https://finnhub.io/api/v1/company-news?symbol={symbol.ToUpperInvariant()}&from={fromStr}&to={toStr}";
+                $"https://finnhub.io/api/v1/company-news?symbol={symbol}&from={fromStr}&to={toStr}";
 
             HttpResponseMessage response = finnhubClient.GetAsync(parameters).Result;
             if (!response.IsSuccessStatusCode)
@@ -114,38 +227,91 @@ namespace InvestingOak.Controllers
                 return BadRequest($"Status code: {response.StatusCode}");
             }
 
-            List<NewsArticle> articles =
-                response.Content.ReadFromJsonAsync<List<NewsArticle>>(serializerOptions).Result;
+            List<FinnhubArticle> articles =
+                response.Content.ReadFromJsonAsync<List<FinnhubArticle>>(serializerOptions).Result;
 
-            return Ok(articles);
+            bool shouldAdd = articleList is null;
+
+            articleList = new ArticleList
+            {
+                Category = "company",
+                Symbol = symbol,
+                Articles = mapper.Map<List<NewsArticle>>(articles),
+                LastUpdated = DateTimeOffset.UtcNow
+            };
+
+            if (shouldAdd)
+            {
+                repository.AddEntity(articleList);
+            }
+
+            repository.SaveAll();
+
+            IEnumerable<NewsArticle> articlesRet = articleList.Articles.Where(a =>
+            {
+                DateTimeOffset dto = DateTimeOffset.FromUnixTimeSeconds(a.DateTime);
+                return dto >= from && dto <= to;
+            });
+
+            return Ok(articlesRet);
         }
 
         [HttpGet("{symbol}/recommendation")]
         public ActionResult Recommendation(string symbol)
         {
-            var parameters = $"https://finnhub.io/api/v1/stock/recommendation?symbol={symbol.ToUpperInvariant()}";
+            symbol = symbol.ToUpperInvariant();
+            Recommendations recommendations = repository.GetRecommendations(symbol);
+
+            // Fetch data if it does not exist in the database or is older than 1 day.
+            if (recommendations is not null && !recommendations.IsStale(1440))
+            {
+                return Ok(recommendations);
+            }
+
+            var parameters = $"https://finnhub.io/api/v1/stock/recommendation?symbol={symbol}";
 
             HttpResponseMessage response = finnhubClient.GetAsync(parameters).Result;
             if (!response.IsSuccessStatusCode)
             {
-                return BadRequest($"Status code: {response.StatusCode}");
+                return BadRequest($"Failed to get recommendations. Status code: {response.StatusCode}");
             }
 
-            List<Recommendation> recommendations =
+            List<Recommendation> recommendationList =
                 response.Content.ReadFromJsonAsync<List<Recommendation>>(serializerOptions).Result;
 
-            if (recommendations is null)
+            if (recommendationList is null)
             {
                 return BadRequest("Recommendation was empty.");
             }
 
-            return Ok(recommendations[0]);
+            bool shouldAdd = recommendations is null;
+
+            recommendations = mapper.Map<Recommendations>(recommendationList[0]);
+            recommendations.Symbol = symbol;
+            recommendations.LastUpdated = DateTimeOffset.UtcNow;
+
+            if (shouldAdd)
+            {
+                repository.AddEntity(recommendations);
+            }
+
+            repository.SaveAll();
+
+            return Ok(recommendations);
         }
 
         [HttpGet("{symbol}/pricetarget")]
         public ActionResult PriceTarget(string symbol)
         {
-            var parameters = $"https://finnhub.io/api/v1/stock/price-target?symbol={symbol.ToUpperInvariant()}";
+            symbol = symbol.ToUpperInvariant();
+            PriceTargets priceTarget = repository.GetPriceTargets(symbol);
+
+            if (priceTarget is not null && !priceTarget.IsStale(1440))
+            {
+                return Ok(priceTarget);
+            }
+
+            var parameters = $"https://finnhub.io/api/v1/stock/price-target?symbol={symbol}";
 
             HttpResponseMessage response = finnhubClient.GetAsync(parameters).Result;
             if (!response.IsSuccessStatusCode)
@@ -160,62 +326,64 @@ namespace InvestingOak.Controllers
                 return BadRequest("Price target was empty.");
             }
 
-            return Ok(target);
+            bool shouldAdd = priceTarget is null;
+
+            priceTarget = mapper.Map<PriceTargets>(target);
+            priceTarget.LastUpdated = DateTimeOffset.UtcNow;
+
+            if (shouldAdd)
+            {
+                repository.AddEntity(priceTarget);
+            }
+
+            repository.SaveAll();
+
+            return Ok(priceTarget);
         }
 
         [HttpGet("{symbol}/quote")]
         public ActionResult Quote(string symbol)
         {
-            var parameters = $"https://finnhub.io/api/v1/quote?symbol={symbol.ToUpperInvariant()}";
+            symbol = symbol.ToUpperInvariant();
+            Quote quote = repository.GetQuote(symbol);
+
+            if (quote is not null && !quote.IsStale(15))
+            {
+                return Ok(quote);
+            }
+
+            // Fetch data if it does not exist in the database or is older than 15 minutes.
+            var today = DateTimeOffset.Now.ToUnixTimeSeconds();
+            var fromDate = new DateTimeOffset(DateTime.Now.AddDays(-3)).ToUnixTimeSeconds();
+            string parameters = $"https://finnhub.io/api/v1/stock/candle?symbol={symbol}" +
+                                $"&resolution=D&from={fromDate}&to={today}";
 
             HttpResponseMessage response = finnhubClient.GetAsync(parameters).Result;
             if (!response.IsSuccessStatusCode)
             {
-                return BadRequest($"Status code: {response.StatusCode}");
+                return BadRequest($"Failed to get quote. Status code: {response.StatusCode}");
             }
 
-            Quote quote = response.Content.ReadFromJsonAsync<Quote>(serializerOptions).Result;
-
-            if (quote is null)
-            {
-                return BadRequest("Quote was empty.");
-            }
-
-            return Ok(quote);
-        }
-
-        [HttpGet("{symbol}/candles")]
-        public ActionResult Candles(string symbol, string resolution, DateTimeOffset from, DateTimeOffset to)
-        {
-            string parameters = $"https://finnhub.io/api/v1/stock/candle?symbol={symbol.ToUpperInvariant()}" +
-                                $"&resolution={resolution}&from={from.ToUnixTimeSeconds()}&to={to.ToUnixTimeSeconds()}";
-
-            HttpResponseMessage response = finnhubClient.GetAsync(parameters).Result;
-            if (!response.IsSuccessStatusCode)
-            {
-                return BadRequest($"Status code: {response.StatusCode}");
-            }
-
-            Candles candles = response.Content.ReadFromJsonAsync<Candles>(serializerOptions).Result;
-
+            Candles candles = response.Content.ReadFromJsonAsync<Candles>().Result;
             if (candles is null)
             {
-                return BadRequest("Candles are empty.");
+                return BadRequest("Failed to get quote.");
             }
 
-            return Ok(candles);
-        }
+            bool shouldAdd = quote is null;
 
-        private static string GetExchangeAcronym(string exchange)
-        {
-            return exchange switch
+            quote = mapper.Map<Quote>(candles);
+            quote.Symbol = symbol;
+            quote.LastUpdated = DateTimeOffset.UtcNow;
+
+            if (shouldAdd)
             {
-                "NASDAQ NMS - GLOBAL MARKET" => "NASDAQ",
-                "NEW YORK STOCK EXCHANGE, INC." => "NYSE",
-                "NYSE MKT LLC" => "AME",
-                "OTC MARKETS" => "OTC",
-                _ => exchange
-            };
+                repository.AddEntity(quote);
+            }
+
+            repository.SaveAll();
+
+            return Ok(quote);
         }
     }
 }

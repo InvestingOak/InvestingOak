@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {faSearch} from '@fortawesome/free-solid-svg-icons';
 import {Observable} from 'rxjs';
-import {StockSymbol} from '../../../finnhub/responses';
+import {StockSymbol} from '../../../stock-data/responses';
 import {Router} from '@angular/router';
-import {FinnhubService} from '../../../finnhub/finnhub.service';
+import {StockDataService} from '../../../stock-data/stock-data.service';
 import * as _ from 'underscore';
 
 @Component({
@@ -20,7 +20,7 @@ export class SearchComponent implements OnInit {
   public numberSuggestions = 4;
   public input = '';
 
-  public constructor(public router: Router, private finnhub: FinnhubService) {
+  public constructor(public router: Router, private finnhub: StockDataService) {
   }
 
   public ngOnInit(): void {

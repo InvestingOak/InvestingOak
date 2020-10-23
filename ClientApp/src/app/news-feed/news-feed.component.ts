@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {News} from '../../finnhub/responses';
+import {News} from '../../stock-data/responses';
 import {Observable} from 'rxjs';
 import * as _ from 'underscore';
 

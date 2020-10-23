@@ -12,7 +12,7 @@ import {AdviserComponent} from './adviser/adviser.component';
 import {TradingViewModule} from '../tradingview/tradingview.module';
 import {ThemeSelectorComponent} from './theme-selector/theme-selector.component';
 import {UserMenuComponent} from './user-menu/user-menu.component';
-import {FinnhubService} from '../finnhub/finnhub.service';
+import {StockDataService} from '../stock-data/stock-data.service';
 import {StocksComponent} from './stocks/stocks.component';
 import {StockHeaderComponent} from './stocks/stock-header/stock-header.component';
 import {StockSummaryComponent} from './stocks/stock-summary/stock-summary.component';
@@ -44,7 +44,7 @@ import {FormsModule} from '@angular/forms';
     FormsModule,
   ],
   providers: [
-    FinnhubService,
+    StockDataService,
     Title
   ],
   bootstrap: [AppComponent]

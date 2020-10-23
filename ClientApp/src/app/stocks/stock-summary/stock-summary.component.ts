@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {Observable} from 'rxjs';
-import {CompanyProfile2, Quote} from '../../../finnhub/responses';
+import {CompanyProfile, Quote} from '../../../stock-data/responses';
 
 @Component({
   selector: 'app-stock-summary',
@@ -13,7 +13,7 @@ export class StockSummaryComponent {
   public symbol: string;
 
   @Input()
-  public profile$: Observable<CompanyProfile2>;  // Company profile
+  public profile$: Observable<CompanyProfile>;  // Company profile
 
   @Input()
   public quote$: Observable<Quote>; // Stock quote from API

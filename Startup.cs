@@ -1,9 +1,9 @@
 using AutoMapper;
+using InvestingOak.Data;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
-using InvestingOak.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -44,10 +44,7 @@ namespace InvestingOak
             services.AddControllersWithViews();
             services.AddRazorPages();
             // In production, the Angular files will be served from this directory
-            services.AddSpaStaticFiles(configuration =>
-            {
-                configuration.RootPath = "ClientApp/dist";
-            });
+            services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ClientApp/dist"; });
 
             services.AddAutoMapper(typeof(Startup));
 
@@ -55,7 +52,7 @@ namespace InvestingOak
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "InvestingOak", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo {Title = "InvestingOak", Version = "v1"});
             });
         }
 

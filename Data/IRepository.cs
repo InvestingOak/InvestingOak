@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using InvestingOak.Data.Entities;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace InvestingOak.Data
@@ -40,5 +41,19 @@ namespace InvestingOak.Data
         /// <param name="model">The entity to delete.</param>
         /// <returns>The entity that was deleted.</returns>
         EntityEntry RemoveEntity(object model);
+
+        SymbolList GetSymbolList(string exchange);
+
+        Quote GetQuote(string symbol);
+
+        CompanyProfile GetCompanyProfile(string symbol);
+
+        Recommendations GetRecommendations(string symbol);
+
+        PriceTargets GetPriceTargets(string symbol);
+
+        Sentiment GetSentiment(string symbol);
+
+        ArticleList GetNewsArticles(string category, string symbol = "");
     }
 }
