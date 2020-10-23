@@ -13,7 +13,7 @@
       <a href="{{profile.webUrl}}">{{profile.webUrl}}</a><br>
       <strong>Sector:</strong> {{profile.sector}}<br>
       <strong>Industry:</strong> {{profile.industry}}<br>
-      <strong>Employees:</strong> {{profile.fullTimeEmployees}}
+      <strong>Employees:</strong> {{profile.fullTimeEmployees | number}}
     </p>
     <p #read class="read read-less mb-1">{{profile.description}}</p>
     <a #readMore (click)="onReadMore(read, readMore)" class="read-more text-center d-block">Read more</a>
