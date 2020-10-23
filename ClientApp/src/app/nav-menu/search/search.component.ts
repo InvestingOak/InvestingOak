@@ -29,7 +29,7 @@ export class SearchComponent implements OnInit {
 
   public suggest(): void {
     if (!this.input) {
-      this.suggestions = [];
+      this.reset();
       return;
     }
 
@@ -59,6 +59,14 @@ export class SearchComponent implements OnInit {
     }
 
     const symbol = this.suggestions[0].symbol;
-    this.router.navigate(['stocks', symbol]).then();
+    this.router.navigate(['stocks', symbol]).then(() => {
+      this.reset();
+    });
+  }
+
+  private reset(): void {
+    this.input = '';
+    this.suggestions = [];
+    this.showSuggestions = false;
   }
 }
