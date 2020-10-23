@@ -35,9 +35,9 @@ export class SymbolOverviewComponent implements AfterViewInit {
       locale: 'en',
       colorTheme: 'light',
       gridLineColor: 'rgba(0, 0, 0, 0.25)',
-      trendLineColor: this.red ? 'rgba(255, 0, 0, 0.8)' : 'rgba(106, 168, 79, 1)',
+      trendLineColor: 'rgba(106, 168, 79, 1)',
       fontColor: '#787b86',
-      underLineColor: this.red ? 'rgba(255, 0, 0, 0.25)' : 'rgba(182, 215, 168, 1)',
+      underLineColor: 'rgba(182, 215, 168, 1)',
       isTransparent: true,
       autosize: true,
       container_id: 'tradingview_12b13'
