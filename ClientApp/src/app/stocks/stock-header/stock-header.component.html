@@ -4,9 +4,11 @@
     <!-- Company name, symbol, and exchange -->
     <div class="flex-fill">
       <h1 class="exchange-h d-inline-block">{{data.profile?.name}}</h1>
-      <div class="exchange d-inline-block ml-2">
+      <div class="exchange d-inline-block ml-2" ngbTooltip="Data may be delayed up to 15 minutes." placement="right">
         <p class="mb-0">{{symbol}}</p>
-        <p class="mb-0">{{data.profile?.exchange}}</p>
+        <p class="mb-0">{{data.profile?.exchange}}
+          <small class="text-warning">&#x2666;</small>
+        </p>
       </div>
     </div>
 
