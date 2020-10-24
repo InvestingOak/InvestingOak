@@ -7,17 +7,17 @@ using System.Text.Json;
 using AutoMapper;
 using InvestingOak.Converters;
 using InvestingOak.Data;
-using InvestingOak.Data.Entities;
-using InvestingOak.Models;
+using InvestingOak.Data.Entities.StockData;
+using InvestingOak.Models.AlphaVantage;
 using InvestingOak.Models.Finnhub;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using FinnhubStockSymbol = InvestingOak.Models.Finnhub.StockSymbol;
 using FinnhubArticle = InvestingOak.Models.Finnhub.NewsArticle;
-using NewsArticle = InvestingOak.Data.Entities.NewsArticle;
-using Quote = InvestingOak.Data.Entities.Quote;
-using Sentiment = InvestingOak.Data.Entities.Sentiment;
-using StockSymbol = InvestingOak.Data.Entities.StockSymbol;
+using NewsArticle = InvestingOak.Data.Entities.StockData.NewsArticle;
+using Quote = InvestingOak.Data.Entities.StockData.Quote;
+using Sentiment = InvestingOak.Data.Entities.StockData.Sentiment;
+using StockSymbol = InvestingOak.Data.Entities.StockData.StockSymbol;
 
 namespace InvestingOak.Controllers
 {

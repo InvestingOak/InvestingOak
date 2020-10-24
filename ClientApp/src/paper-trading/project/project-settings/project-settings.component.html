@@ -1,0 +1,55 @@
+﻿<!-- Change info -->
+<h4>Edit info</h4>
+<form class="form">
+  <div class="form-group form-inline">
+    <label for="renameProject">Name</label>
+    <input type="text" class="form-control mx-1" id="renameProject" placeholder="{{project.name}}" name="renameProject"
+           [(ngModel)]="name">
+    <button type="button" class="btn btn-outline-secondary" (click)="renameProject()">Rename</button>
+  </div>
+
+  <div class="form-group form-inline">
+    <label for="changeBalance">Balance</label>
+    <input type="number" class="form-control mx-1" id="changeBalance" placeholder="{{project.balance}}"
+           name="changeBalance">
+    <button type="button" class="btn btn-outline-secondary">Change balance</button>
+  </div>
+</form>
+
+<br>
+
+<!-- Delete project -->
+<h4>Danger</h4>
+<button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#deleteProjectModal">Delete this
+  project
+</button>
+<div class="modal fade" id="deleteProjectModal" tabindex="-1" role="dialog" aria-labelledby="deleteProjectModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteProjectModalLabel">Are you sure?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Deleting this project <em>cannot</em> be undone.</p>
+        <p>Type <b>{{project.name}}</b> to confirm.</p>
+        <!--suppress HtmlFormInputWithoutLabel -->
+        <input type="text" class="form-control" id="deleteConfirm" name="deleteConfirm" [(ngModel)]="confirmText"
+               #deleteConfirm="ngModel" required>
+        <div class="text-danger" *ngIf="deleteConfirm.touched && confirmText != project.name">Confirm text does not
+          match project name.
+        </div>
+        <div *ngIf="errorMessage" class="alert alert-warning">{{errorMessage}}</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="deleteProject()"
+                [disabled]="confirmText != project.name">Delete
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

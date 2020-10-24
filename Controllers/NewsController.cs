@@ -7,7 +7,7 @@ using System.Text.Json;
 using AutoMapper;
 using InvestingOak.Converters;
 using InvestingOak.Data;
-using InvestingOak.Data.Entities;
+using InvestingOak.Data.Entities.StockData;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using FinnhubArticle = InvestingOak.Models.Finnhub.NewsArticle;

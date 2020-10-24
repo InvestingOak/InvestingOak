@@ -1,5 +1,6 @@
 ﻿using IdentityServer4.EntityFramework.Options;
-using InvestingOak.Data.Entities;
+using InvestingOak.Data.Entities.PaperTrading;
+using InvestingOak.Data.Entities.StockData;
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -27,6 +28,12 @@ namespace InvestingOak.Data
         public DbSet<Sentiment> Sentiments { get; set; }
 
         public DbSet<ArticleList> NewsArticles { get; set; }
+
+        public DbSet<Project> Projects { get; set; }
+
+        public DbSet<OptionTrade> OptionTrades { get; set; }
+
+        public DbSet<StockTrade> StockTrades { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

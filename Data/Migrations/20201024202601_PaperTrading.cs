@@ -1,0 +1,613 @@
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
+
+namespace InvestingOak.Migrations
+{
+    public partial class PaperTrading : Migration
+    {
+        protected override void Up(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.CreateTable(
+                name: "AspNetRoles",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "TEXT", nullable: false),
+                    Name = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
+                    NormalizedName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "TEXT", nullable: true)
+                },
+                constraints: table => { table.PrimaryKey("PK_AspNetRoles", x => x.Id); });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUsers",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "TEXT", nullable: false),
+                    UserName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
+                    Email = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>(type: "INTEGER", nullable: false),
+                    PasswordHash = table.Column<string>(type: "TEXT", nullable: true),
+                    SecurityStamp = table.Column<string>(type: "TEXT", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "TEXT", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "TEXT", nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(type: "INTEGER", nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(type: "INTEGER", nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(type: "TEXT", nullable: true),
+                    LockoutEnabled = table.Column<bool>(type: "INTEGER", nullable: false),
+                    AccessFailedCount = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table => { table.PrimaryKey("PK_AspNetUsers", x => x.Id); });
+
+            migrationBuilder.CreateTable(
+                name: "CompanyProfiles",
+                columns: table => new
+                {
+                    Symbol = table.Column<string>(type: "TEXT", nullable: false),
+                    AssetType = table.Column<string>(type: "TEXT", nullable: true),
+                    Name = table.Column<string>(type: "TEXT", nullable: true),
+                    Description = table.Column<string>(type: "TEXT", nullable: true),
+                    Exchange = table.Column<string>(type: "TEXT", nullable: true),
+                    Currency = table.Column<string>(type: "TEXT", nullable: true),
+                    Country = table.Column<string>(type: "TEXT", nullable: true),
+                    Sector = table.Column<string>(type: "TEXT", nullable: true),
+                    Industry = table.Column<string>(type: "TEXT", nullable: true),
+                    Address = table.Column<string>(type: "TEXT", nullable: true),
+                    FullTimeEmployees = table.Column<long>(type: "INTEGER", nullable: false),
+                    FiscalYearEnd = table.Column<string>(type: "TEXT", nullable: true),
+                    LatestQuarter = table.Column<DateTimeOffset>(type: "TEXT", nullable: false),
+                    MarketCapitalization = table.Column<decimal>(type: "TEXT", nullable: false),
+                    EBITDA = table.Column<decimal>(type: "TEXT", nullable: false),
+                    PERatio = table.Column<decimal>(type: "TEXT", nullable: false),
+                    PEGRatio = table.Column<decimal>(type: "TEXT", nullable: false),
+                    BookValue = table.Column<decimal>(type: "TEXT", nullable: false),
+                    DividendPerShare = table.Column<decimal>(type: "TEXT", nullable: false),
+                    DividendYear = table.Column<decimal>(type: "TEXT", nullable: false),
+                    EarningsPerShare = table.Column<decimal>(type: "TEXT", nullable: false),
+                    RevenuePerShareTTM = table.Column<decimal>(type: "TEXT", nullable: false),
+                    ProfitMargin = table.Column<decimal>(type: "TEXT", nullable: false),
+                    OperatingMarginTTM = table.Column<decimal>(type: "TEXT", nullable: false),
+                    ReturnOnAssetsTTM = table.Column<decimal>(type: "TEXT", nullable: false),
+                    ReturnOnEquityTTM = table.Column<decimal>(type: "TEXT", nullable: false),
+                    RevenueTTM = table.Column<decimal>(type: "TEXT", nullable: false),
+                    GrossProfitTTM = table.Column<decimal>(type: "TEXT", nullable: false),
+                    DilutedEPSTTM = table.Column<decimal>(type: "TEXT", nullable: false),
+                    QuarterlyEarningsGrowthYOY = table.Column<decimal>(type: "TEXT", nullable: false),
+                    QuarterlyRevenueGrowthYOY = table.Column<decimal>(type: "TEXT", nullable: false),
+                    AnalystTargetPrice = table.Column<decimal>(type: "TEXT", nullable: false),
+                    TrailingPE = table.Column<decimal>(type: "TEXT", nullable: false),
+                    ForwardPE = table.Column<decimal>(type: "TEXT", nullable: false),
+                    PriceToSalesRatioTTM = table.Column<decimal>(type: "TEXT", nullable: false),
+                    PriceToBookRatio = table.Column<decimal>(type: "TEXT", nullable: false),
+                    EVToRevenue = table.Column<decimal>(type: "TEXT", nullable: false),
+                    EVToEBITDA = table.Column<decimal>(type: "TEXT", nullable: false),
+                    Beta = table.Column<decimal>(type: "TEXT", nullable: false),
+                    WeekHigh52 = table.Column<decimal>(type: "TEXT", nullable: false),
+                    WeekLow52 = table.Column<decimal>(type: "TEXT", nullable: false),
+                    MovingAverageDaily50 = table.Column<decimal>(type: "TEXT", nullable: false),
+                    MovingAverageDaily200 = table.Column<decimal>(type: "TEXT", nullable: false),
+                    SharesOutstanding = table.Column<long>(type: "INTEGER", nullable: false),
+                    SharesFloat = table.Column<long>(type: "INTEGER", nullable: false),
+                    SharesShort = table.Column<long>(type: "INTEGER", nullable: false),
+                    SharesShortPriorMonth = table.Column<long>(type: "INTEGER", nullable: false),
+                    ShortRatio = table.Column<decimal>(type: "TEXT", nullable: false),
+                    ShortPercentOutstanding = table.Column<decimal>(type: "TEXT", nullable: false),
+                    ShortPercentFloat = table.Column<decimal>(type: "TEXT", nullable: false),
+                    PercentInsiders = table.Column<decimal>(type: "TEXT", nullable: false),
+                    PercentInstitutions = table.Column<decimal>(type: "TEXT", nullable: false),
+                    ForwardAnnualDividendRate = table.Column<decimal>(type: "TEXT", nullable: false),
+                    ForwardAnnualDividendYield = table.Column<decimal>(type: "TEXT", nullable: false),
+                    PayoutRatio = table.Column<decimal>(type: "TEXT", nullable: false),
+                    DividendDate = table.Column<DateTimeOffset>(type: "TEXT", nullable: false),
+                    ExDividendDate = table.Column<DateTimeOffset>(type: "TEXT", nullable: false),
+                    LastSplitFactor = table.Column<string>(type: "TEXT", nullable: true),
+                    LastSplitDate = table.Column<DateTimeOffset>(type: "TEXT", nullable: false),
+                    LogoUrl = table.Column<string>(type: "TEXT", nullable: true),
+                    WebUrl = table.Column<string>(type: "TEXT", nullable: true),
+                    LastUpdated = table.Column<DateTimeOffset>(type: "TEXT", nullable: false)
+                },
+                constraints: table => { table.PrimaryKey("PK_CompanyProfiles", x => x.Symbol); });
+
+            migrationBuilder.CreateTable(
+                name: "DeviceCodes",
+                columns: table => new
+                {
+                    UserCode = table.Column<string>(type: "TEXT", maxLength: 200, nullable: false),
+                    DeviceCode = table.Column<string>(type: "TEXT", maxLength: 200, nullable: false),
+                    SubjectId = table.Column<string>(type: "TEXT", maxLength: 200, nullable: true),
+                    SessionId = table.Column<string>(type: "TEXT", maxLength: 100, nullable: true),
+                    ClientId = table.Column<string>(type: "TEXT", maxLength: 200, nullable: false),
+                    Description = table.Column<string>(type: "TEXT", maxLength: 200, nullable: true),
+                    CreationTime = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    Expiration = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    Data = table.Column<string>(type: "TEXT", maxLength: 50000, nullable: false)
+                },
+                constraints: table => { table.PrimaryKey("PK_DeviceCodes", x => x.UserCode); });
+
+            migrationBuilder.CreateTable(
+                name: "NewsArticles",
+                columns: table => new
+                {
+                    Category = table.Column<string>(type: "TEXT", nullable: false),
+                    Symbol = table.Column<string>(type: "TEXT", nullable: false),
+                    LastUpdated = table.Column<DateTimeOffset>(type: "TEXT", nullable: false)
+                },
+                constraints: table => { table.PrimaryKey("PK_NewsArticles", x => new {x.Category, x.Symbol}); });
+
+            migrationBuilder.CreateTable(
+                name: "PersistedGrants",
+                columns: table => new
+                {
+                    Key = table.Column<string>(type: "TEXT", maxLength: 200, nullable: false),
+                    Type = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
+                    SubjectId = table.Column<string>(type: "TEXT", maxLength: 200, nullable: true),
+                    SessionId = table.Column<string>(type: "TEXT", maxLength: 100, nullable: true),
+                    ClientId = table.Column<string>(type: "TEXT", maxLength: 200, nullable: false),
+                    Description = table.Column<string>(type: "TEXT", maxLength: 200, nullable: true),
+                    CreationTime = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    Expiration = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    ConsumedTime = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    Data = table.Column<string>(type: "TEXT", maxLength: 50000, nullable: false)
+                },
+                constraints: table => { table.PrimaryKey("PK_PersistedGrants", x => x.Key); });
+
+            migrationBuilder.CreateTable(
+                name: "PriceTargets",
+                columns: table => new
+                {
+                    Symbol = table.Column<string>(type: "TEXT", nullable: false),
+                    Period = table.Column<DateTimeOffset>(type: "TEXT", nullable: false),
+                    TargetHigh = table.Column<decimal>(type: "TEXT", nullable: false),
+                    TargetLow = table.Column<decimal>(type: "TEXT", nullable: false),
+                    TargetMean = table.Column<decimal>(type: "TEXT", nullable: false),
+                    TargetMedian = table.Column<decimal>(type: "TEXT", nullable: false),
+                    LastUpdated = table.Column<DateTimeOffset>(type: "TEXT", nullable: false)
+                },
+                constraints: table => { table.PrimaryKey("PK_PriceTargets", x => x.Symbol); });
+
+            migrationBuilder.CreateTable(
+                name: "Quotes",
+                columns: table => new
+                {
+                    Symbol = table.Column<string>(type: "TEXT", nullable: false),
+                    Close = table.Column<decimal>(type: "TEXT", nullable: false),
+                    High = table.Column<decimal>(type: "TEXT", nullable: false),
+                    Low = table.Column<decimal>(type: "TEXT", nullable: false),
+                    Open = table.Column<decimal>(type: "TEXT", nullable: false),
+                    Volume = table.Column<ulong>(type: "INTEGER", nullable: false),
+                    PreviousClose = table.Column<decimal>(type: "TEXT", nullable: false),
+                    LastUpdated = table.Column<DateTimeOffset>(type: "TEXT", nullable: false)
+                },
+                constraints: table => { table.PrimaryKey("PK_Quotes", x => x.Symbol); });
+
+            migrationBuilder.CreateTable(
+                name: "Recommendations",
+                columns: table => new
+                {
+                    Symbol = table.Column<string>(type: "TEXT", nullable: false),
+                    Period = table.Column<DateTimeOffset>(type: "TEXT", nullable: false),
+                    Buy = table.Column<uint>(type: "INTEGER", nullable: false),
+                    Hold = table.Column<uint>(type: "INTEGER", nullable: false),
+                    Sell = table.Column<uint>(type: "INTEGER", nullable: false),
+                    StrongBuy = table.Column<uint>(type: "INTEGER", nullable: false),
+                    StrongSell = table.Column<uint>(type: "INTEGER", nullable: false),
+                    LastUpdated = table.Column<DateTimeOffset>(type: "TEXT", nullable: false)
+                },
+                constraints: table => { table.PrimaryKey("PK_Recommendations", x => x.Symbol); });
+
+            migrationBuilder.CreateTable(
+                name: "Sentiments",
+                columns: table => new
+                {
+                    Symbol = table.Column<string>(type: "TEXT", nullable: false),
+                    ArticlesInLastWeek = table.Column<uint>(type: "INTEGER", nullable: false),
+                    Buzz = table.Column<double>(type: "REAL", nullable: false),
+                    WeeklyAverage = table.Column<double>(type: "REAL", nullable: false),
+                    CompanyNewsScore = table.Column<double>(type: "REAL", nullable: false),
+                    SectorAverageBullishPercent = table.Column<double>(type: "REAL", nullable: false),
+                    SectorAverageNewsScore = table.Column<double>(type: "REAL", nullable: false),
+                    BearishPercent = table.Column<double>(type: "REAL", nullable: false),
+                    BullishPercent = table.Column<double>(type: "REAL", nullable: false),
+                    LastUpdated = table.Column<DateTimeOffset>(type: "TEXT", nullable: false)
+                },
+                constraints: table => { table.PrimaryKey("PK_Sentiments", x => x.Symbol); });
+
+            migrationBuilder.CreateTable(
+                name: "SymbolLists",
+                columns: table => new
+                {
+                    Exchange = table.Column<string>(type: "TEXT", nullable: false),
+                    LastUpdated = table.Column<DateTimeOffset>(type: "TEXT", nullable: false)
+                },
+                constraints: table => { table.PrimaryKey("PK_SymbolLists", x => x.Exchange); });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetRoleClaims",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    RoleId = table.Column<string>(type: "TEXT", nullable: false),
+                    ClaimType = table.Column<string>(type: "TEXT", nullable: true),
+                    ClaimValue = table.Column<string>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetRoleClaims", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserClaims",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    UserId = table.Column<string>(type: "TEXT", nullable: false),
+                    ClaimType = table.Column<string>(type: "TEXT", nullable: true),
+                    ClaimValue = table.Column<string>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserClaims", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetUserClaims_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserLogins",
+                columns: table => new
+                {
+                    LoginProvider = table.Column<string>(type: "TEXT", maxLength: 128, nullable: false),
+                    ProviderKey = table.Column<string>(type: "TEXT", maxLength: 128, nullable: false),
+                    ProviderDisplayName = table.Column<string>(type: "TEXT", nullable: true),
+                    UserId = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserLogins", x => new {x.LoginProvider, x.ProviderKey});
+                    table.ForeignKey(
+                        name: "FK_AspNetUserLogins_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserRoles",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(type: "TEXT", nullable: false),
+                    RoleId = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserRoles", x => new {x.UserId, x.RoleId});
+                    table.ForeignKey(
+                        name: "FK_AspNetUserRoles_AspNetRoles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AspNetUserRoles_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserTokens",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(type: "TEXT", nullable: false),
+                    LoginProvider = table.Column<string>(type: "TEXT", maxLength: 128, nullable: false),
+                    Name = table.Column<string>(type: "TEXT", maxLength: 128, nullable: false),
+                    Value = table.Column<string>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserTokens", x => new {x.UserId, x.LoginProvider, x.Name});
+                    table.ForeignKey(
+                        name: "FK_AspNetUserTokens_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Projects",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    Description = table.Column<string>(type: "TEXT", nullable: true),
+                    CreationDate = table.Column<DateTimeOffset>(type: "TEXT", nullable: false),
+                    InitialBalance = table.Column<decimal>(type: "decimal(38, 2)", nullable: false),
+                    Balance = table.Column<decimal>(type: "decimal(38, 2)", nullable: false),
+                    UserId = table.Column<string>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Projects", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Projects_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "NewsArticle",
+                columns: table => new
+                {
+                    ArticleId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Id = table.Column<uint>(type: "INTEGER", nullable: false),
+                    Category = table.Column<string>(type: "TEXT", nullable: true),
+                    DateTime = table.Column<uint>(type: "INTEGER", nullable: false),
+                    Headline = table.Column<string>(type: "TEXT", nullable: true),
+                    ImageUrl = table.Column<string>(type: "TEXT", nullable: true),
+                    Related = table.Column<string>(type: "TEXT", nullable: true),
+                    Source = table.Column<string>(type: "TEXT", nullable: true),
+                    Summary = table.Column<string>(type: "TEXT", nullable: true),
+                    Url = table.Column<string>(type: "TEXT", nullable: true),
+                    ArticleListCategory = table.Column<string>(type: "TEXT", nullable: true),
+                    ArticleListSymbol = table.Column<string>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_NewsArticle", x => x.ArticleId);
+                    table.ForeignKey(
+                        name: "FK_NewsArticle_NewsArticles_ArticleListCategory_ArticleListSymbol",
+                        columns: x => new {x.ArticleListCategory, x.ArticleListSymbol},
+                        principalTable: "NewsArticles",
+                        principalColumns: new[] {"Category", "Symbol"},
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "StockSymbol",
+                columns: table => new
+                {
+                    Symbol = table.Column<string>(type: "TEXT", nullable: false),
+                    DisplaySymbol = table.Column<string>(type: "TEXT", nullable: true),
+                    Description = table.Column<string>(type: "TEXT", nullable: true),
+                    Type = table.Column<string>(type: "TEXT", nullable: true),
+                    Currency = table.Column<string>(type: "TEXT", nullable: true),
+                    SymbolListExchange = table.Column<string>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StockSymbol", x => x.Symbol);
+                    table.ForeignKey(
+                        name: "FK_StockSymbol_SymbolLists_SymbolListExchange",
+                        column: x => x.SymbolListExchange,
+                        principalTable: "SymbolLists",
+                        principalColumn: "Exchange",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Position",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Symbol = table.Column<string>(type: "TEXT", nullable: false),
+                    Open = table.Column<DateTimeOffset>(type: "TEXT", nullable: false),
+                    Close = table.Column<DateTimeOffset>(type: "TEXT", nullable: false),
+                    Note = table.Column<string>(type: "TEXT", nullable: true),
+                    Discriminator = table.Column<string>(type: "TEXT", nullable: false),
+                    ProjectId = table.Column<int>(type: "INTEGER", nullable: true),
+                    Quantity = table.Column<int>(type: "INTEGER", nullable: true),
+                    OpenPrice = table.Column<decimal>(type: "decimal(38, 3)", nullable: true),
+                    ClosePrice = table.Column<decimal>(type: "decimal(38, 3)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Position", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Position_Projects_ProjectId",
+                        column: x => x.ProjectId,
+                        principalTable: "Projects",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Leg",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Quantity = table.Column<int>(type: "INTEGER", nullable: false),
+                    Expiration = table.Column<DateTimeOffset>(type: "TEXT", nullable: false),
+                    Strike = table.Column<decimal>(type: "decimal(38, 1)", nullable: false),
+                    Type = table.Column<int>(type: "INTEGER", nullable: false),
+                    OpenPrice = table.Column<decimal>(type: "decimal(38, 3)", nullable: false),
+                    ClosePrice = table.Column<decimal>(type: "decimal(38, 3)", nullable: false),
+                    OptionTradeId = table.Column<int>(type: "INTEGER", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Leg", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Leg_Position_OptionTradeId",
+                        column: x => x.OptionTradeId,
+                        principalTable: "Position",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetRoleClaims_RoleId",
+                table: "AspNetRoleClaims",
+                column: "RoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "RoleNameIndex",
+                table: "AspNetRoles",
+                column: "NormalizedName",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUserClaims_UserId",
+                table: "AspNetUserClaims",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUserLogins_UserId",
+                table: "AspNetUserLogins",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUserRoles_RoleId",
+                table: "AspNetUserRoles",
+                column: "RoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "EmailIndex",
+                table: "AspNetUsers",
+                column: "NormalizedEmail");
+
+            migrationBuilder.CreateIndex(
+                name: "UserNameIndex",
+                table: "AspNetUsers",
+                column: "NormalizedUserName",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DeviceCodes_DeviceCode",
+                table: "DeviceCodes",
+                column: "DeviceCode",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DeviceCodes_Expiration",
+                table: "DeviceCodes",
+                column: "Expiration");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Leg_OptionTradeId",
+                table: "Leg",
+                column: "OptionTradeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_NewsArticle_ArticleListCategory_ArticleListSymbol",
+                table: "NewsArticle",
+                columns: new[] {"ArticleListCategory", "ArticleListSymbol"});
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PersistedGrants_Expiration",
+                table: "PersistedGrants",
+                column: "Expiration");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PersistedGrants_SubjectId_ClientId_Type",
+                table: "PersistedGrants",
+                columns: new[] {"SubjectId", "ClientId", "Type"});
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PersistedGrants_SubjectId_SessionId_Type",
+                table: "PersistedGrants",
+                columns: new[] {"SubjectId", "SessionId", "Type"});
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Position_ProjectId",
+                table: "Position",
+                column: "ProjectId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Projects_UserId",
+                table: "Projects",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StockSymbol_SymbolListExchange",
+                table: "StockSymbol",
+                column: "SymbolListExchange");
+        }
+
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropTable(
+                name: "AspNetRoleClaims");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUserClaims");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUserLogins");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUserRoles");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "CompanyProfiles");
+
+            migrationBuilder.DropTable(
+                name: "DeviceCodes");
+
+            migrationBuilder.DropTable(
+                name: "Leg");
+
+            migrationBuilder.DropTable(
+                name: "NewsArticle");
+
+            migrationBuilder.DropTable(
+                name: "PersistedGrants");
+
+            migrationBuilder.DropTable(
+                name: "PriceTargets");
+
+            migrationBuilder.DropTable(
+                name: "Quotes");
+
+            migrationBuilder.DropTable(
+                name: "Recommendations");
+
+            migrationBuilder.DropTable(
+                name: "Sentiments");
+
+            migrationBuilder.DropTable(
+                name: "StockSymbol");
+
+            migrationBuilder.DropTable(
+                name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Position");
+
+            migrationBuilder.DropTable(
+                name: "NewsArticles");
+
+            migrationBuilder.DropTable(
+                name: "SymbolLists");
+
+            migrationBuilder.DropTable(
+                name: "Projects");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
+        }
+    }
+}

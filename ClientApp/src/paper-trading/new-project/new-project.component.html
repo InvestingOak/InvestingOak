@@ -1,0 +1,43 @@
+<div class="row pt-3 m-auto">
+  <div class="col-md-4">
+    <h2>New Project</h2>
+    <form (submit)="onSubmit()" #createForm="ngForm">
+      <div *ngIf="errorMessage" class="alert alert-warning">{{errorMessage}}</div>
+      <div class="form-group row">
+        <!-- Project name input -->
+        <div class="col-md-6">
+          <label for="projectName">Name</label>
+          <input type="text" class="form-control" id="projectName" name="projectName" [(ngModel)]="project.name"
+                 #projectName="ngModel" required>
+          <div class="text-danger" *ngIf="projectName.touched && projectName?.errors?.required">Project name is
+            required.
+          </div>
+        </div>
+        <!-- Initial balance input -->
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="balance">Initial Balance</label>
+            <input type="number" class="form-control" id="balance" name="balance" value="{{initialBalance}}"
+                   #balance="ngModel" (ngModelChange)="project.initialBalance=$event"
+                   [ngModelOptions]="{updateOn:'blur'}" [ngModel]="project.initialBalance" required>
+            <div class="text-danger" *ngIf="balance.touched && balance?.errors?.required">Initial balance is required.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Description input -->
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea [(ngModel)]="project.description" class="form-control" id="description" name="description"
+                  rows="5"></textarea>
+      </div>
+
+      <!-- Submit button -->
+      <div class="form-group">
+        <input type="submit" class="btn btn-success" value="Create Project" [disabled]="createForm.invalid">
+        <a routerLink="/" class="btn btn-default">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>

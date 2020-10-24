@@ -19,6 +19,10 @@ import {StockSummaryComponent} from './stocks/stock-summary/stock-summary.compon
 import {StockAnalysisComponent} from './stocks/stock-analysis/stock-analysis.component';
 import {SearchComponent} from './nav-menu/search/search.component';
 import {FormsModule} from '@angular/forms';
+import {PaperTradingModule} from '../paper-trading/paper-trading.module';
+import {AccountService} from '../account/account.service';
+import {HTTP_INTERCEPTORS} from '@angular/common/http';
+import {AuthorizeInterceptor} from '../api-authorization/authorize.interceptor';
 
 @NgModule({
   declarations: [
@@ -41,11 +45,18 @@ import {FormsModule} from '@angular/forms';
     FontAwesomeModule,
     NgbModule,
     TradingViewModule,
-    FormsModule
+    FormsModule,
+    PaperTradingModule
   ],
   providers: [
     StockDataService,
-    Title
+    Title,
+    AccountService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthorizeInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

@@ -1,0 +1,57 @@
+<!-- Project Tabs -->
+<div class="h-66">
+  <ul class="nav nav-tabs" id="projectTab" role="tablist">
+    <li class="nav-item">
+      <a class="nav-link active" id="summary-tab" data-toggle="tab" href="#summary" role="tab" aria-controls="summary"
+         aria-selected="true">Summary</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" id="trades-tab" data-toggle="tab" href="#trades" role="tab" aria-controls="trades"
+         aria-selected="false">Trades</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" id="settings-tab" data-toggle="tab" href="#settings" role="tab" aria-controls="settings"
+         aria-selected="false">Settings</a>
+    </li>
+  </ul>
+
+  <div class="tab-content p-3" id="projectTabContent">
+    <!-- Summary -->
+    <div class="tab-pane show active" id="summary" role="tabpanel" aria-labelledby="summary-tab">
+      <app-project-summary></app-project-summary>
+    </div>
+    <!-- Trades -->
+    <div class="tab-pane" id="trades" role="tabpanel" aria-labelledby="trades-tab">
+      <app-project-trades></app-project-trades>
+    </div>
+    <!-- Settings -->
+    <div class="tab-pane" id="settings" role="tabpanel" aria-labelledby="settings-tab">
+      <app-project-settings></app-project-settings>
+    </div>
+  </div>
+</div>
+
+<!-- Trade Tabs -->
+<div>
+  <ul class="nav nav-tabs" id="tradeTab" role="tablist">
+    <li class="nav-item">
+      <a class="nav-link active" id="newtrade-tab" data-toggle="tab" href="#newtrade" role="tab"
+         aria-controls="newtrade" aria-selected="true">New Trade</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" id="opentrades-tab" data-toggle="tab" href="#opentrades" role="tab" aria-controls="opentrades"
+         aria-selected="false">Open Trades</a>
+    </li>
+  </ul>
+
+  <div class="tab-content p-3" id="tradeTabContent">
+    <!-- New trade -->
+    <div class="tab-pane show active" id="newtrade" role="tabpanel" aria-labelledby="newtrade-tab">
+      <app-new-trade></app-new-trade>
+    </div>
+    <!-- Open trades -->
+    <div class="tab-pane" id="opentrades" role="tabpanel" aria-labelledby="opentrades-tab">
+      <app-open-trades></app-open-trades>
+    </div>
+  </div>
+</div>

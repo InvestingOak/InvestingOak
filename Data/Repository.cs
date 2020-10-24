@@ -1,6 +1,9 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-using InvestingOak.Data.Entities;
+using InvestingOak.Data.Entities.PaperTrading;
+using InvestingOak.Data.Entities.StockData;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
@@ -27,16 +30,31 @@ namespace InvestingOak.Data
 
         public EntityEntry AddEntity(object model)
         {
+            if (model is null)
+            {
+                throw new ArgumentNullException(nameof(model));
+            }
+
             return context.Add(model);
         }
 
         public async Task<EntityEntry> AddEntityAsync(object model)
         {
+            if (model is null)
+            {
+                throw new ArgumentNullException(nameof(model));
+            }
+
             return await context.AddAsync(model);
         }
 
         public EntityEntry RemoveEntity(object model)
         {
+            if (model is null)
+            {
+                throw new ArgumentNullException(nameof(model));
+            }
+
             return context.Remove(model);
         }
 
@@ -74,6 +92,16 @@ namespace InvestingOak.Data
         {
             return context.NewsArticles.Include(s => s.Articles)
                 .FirstOrDefault(a => a.Category == category && a.Symbol == symbols);
+        }
+
+        public Project GetProjectByName(string name, ApplicationUser user)
+        {
+            return context.Projects.FirstOrDefault(p => p.User == user && p.Name == name);
+        }
+
+        public IEnumerable<Project> GetProjects(ApplicationUser user)
+        {
+            return context.Projects.Where(p => p.User == user);
         }
     }
 }

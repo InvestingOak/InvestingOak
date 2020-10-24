@@ -1,0 +1,20 @@
+.sidebar {
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+
+  .active-link {
+    background-color: #e8f0fe;
+  }
+
+  .nav-item {
+    padding-left: 0;
+
+    &:hover {
+      background-color: #eee;
+    }
+
+    .nav-link {
+      color: #5f6368;
+      font-weight: 600;
+    }
+  }
+}

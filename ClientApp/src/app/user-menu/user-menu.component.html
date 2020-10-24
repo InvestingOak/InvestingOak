@@ -1,8 +1,9 @@
 <!-- User links -->
 <div *ngIf="isAuthenticated | async" class="ml-2">
   <div class="dropdown d-inline ml-1">
-    <span class="dropdown-toggle" role="button" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      {{userName | async}}
+    <span aria-expanded="false" aria-haspopup="true" class="dropdown-toggle" data-toggle="dropdown" id="userDropdown"
+          role="button">
+      {{(user | async).name}}
     </span>
     <div class="dropdown-menu" aria-labelledby="userDropdown">
       <a class="dropdown-item" [routerLink]='["/authentication/profile"]' title="Profile">Profile</a>

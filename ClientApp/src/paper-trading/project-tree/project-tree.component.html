@@ -1,0 +1,20 @@
+<div class="border-right box-shadow sidebar">
+  <form class="form-inline flex-grow-1 pt-3 px-3">
+    <div class="input-group flex-fill">
+      <input class="form-control" type="search" placeholder="Search projects" aria-label="Search">
+      <div class="input-group-append">
+        <button type="button" class="btn btn-success" [routerLink]="['/paper/new']">
+          <fa-icon [icon]="plus">+</fa-icon>
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <ul class="nav flex-column border-top mt-3">
+    <li class="nav-item pl-3 pr-3" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}"
+        *ngFor="let p of projectList">
+      <a class="nav-link pl-0 pr-0" [routerLink]="['/paper/project/', p.name]" data-toggle="tooltip"
+         data-placement="bottom" title="{{p.description}}">{{p.name}}</a>
+    </li>
+  </ul>
+</div>

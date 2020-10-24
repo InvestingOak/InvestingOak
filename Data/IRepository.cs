@@ -1,5 +1,7 @@
-﻿using System.Threading.Tasks;
-using InvestingOak.Data.Entities;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using InvestingOak.Data.Entities.PaperTrading;
+using InvestingOak.Data.Entities.StockData;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace InvestingOak.Data
@@ -55,5 +57,9 @@ namespace InvestingOak.Data
         Sentiment GetSentiment(string symbol);
 
         ArticleList GetNewsArticles(string category, string symbol = "");
+
+        Project GetProjectByName(string name, ApplicationUser user);
+
+        IEnumerable<Project> GetProjects(ApplicationUser user);
     }
 }

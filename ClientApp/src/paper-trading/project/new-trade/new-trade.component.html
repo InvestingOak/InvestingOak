@@ -1,0 +1,38 @@
+﻿<form>
+  <div class="form-inline">
+    <button type="submit" class="btn btn-success mr-2">Submit</button>
+    <input type="text" class="form-control text-center symbol-input d-inline"
+           placeholder="Symbol" #symbol name="symbol"
+           (input)="symbol.value = symbol.value.toUpperCase(); trade.symbol = symbol.value;">
+    <span class="d-inline ml-3">{{symbolDescription}}</span>
+  </div>
+  <hr>
+  <div class="form-inline mt-2">
+    <select class="custom-select buy-sell-select">
+      <option value="Buy">Buy</option>
+      <option value="Sell">Sell</option>
+    </select>
+    <select class="custom-select strategy-select d-inline ml-2">
+      <option value="Share">Share</option>
+      <option value="Call">Call</option>
+      <option value="Put">Put</option>
+    </select>
+    <label class="ml-2">
+      Quantity
+      <input type="number" class="form-control quantity-input ml-2" value="1" name="quantity"
+             [ngModel]="trade.quantity">
+    </label>
+    <label class="ml-2">
+      Exp.
+      <input type="date" class="form-control expiration-input ml-2" name="expiration" [ngModel]="trade.expiration">
+    </label>
+    <label class="ml-2">
+      Strike
+      <input type="number" class="form-control strike-input ml-2" name="strike" [ngModel]="trade.strike">
+    </label>
+    <label class="ml-2">
+      Price
+      <input type="number" class="form-control price-input ml-2" name="price" [ngModel]="trade.price">
+    </label>
+  </div>
+</form>
