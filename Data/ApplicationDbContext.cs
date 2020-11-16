@@ -1,4 +1,4 @@
-﻿using IdentityServer4.EntityFramework.Options;
+using IdentityServer4.EntityFramework.Options;
 using InvestingOak.Data.Entities;
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.EntityFrameworkCore;
@@ -27,6 +27,8 @@ namespace InvestingOak.Data
         public DbSet<Sentiment> Sentiments { get; set; }
 
         public DbSet<ArticleList> NewsArticles { get; set; }
+
+        public DbSet<BalanceSheet> BalanceSheets { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

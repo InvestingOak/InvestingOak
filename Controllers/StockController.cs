@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -100,6 +100,41 @@ namespace InvestingOak.Controllers
             repository.SaveAll();
 
             return Ok(symbolList.Symbols);
+        }
+
+        [HttpGet("{symbol}/BalanceSheet")]
+        public ActionResult BalanceSheet(string symbol)
+        {
+            symbol = symbol.ToUpperInvariant();
+            BalanceSheet balanceSheet = repository.GetBalanceSheet(symbol);
+
+            if (balanceSheet is not null && !balanceSheet.IsStale(1440))
+            {
+                return Ok(balanceSheet);
+            }
+            var parameters =
+                $"https://www.alphavantage.co/query?function=BALANCE_SHEET&symbol={symbol}&apikey={alphaVantageKey}";
+            HttpResponseMessage response = alphaVantageClient.GetAsync(parameters).Result;
+            if (!response.IsSuccessStatusCode)
+            {
+                return BadRequest($"Status code: {response.StatusCode}");
+            }
+            BalanceSheet2 balanceSheet2 = response.Content.ReadFromJsonAsync<BalanceSheet2>(serializerOptions).Result;
+            if (balanceSheet2?.Symbol is null)
+            {
+                return BadRequest("Symbol is invalid or balance sheet does not exist");
+            }
+
+            bool shouldAdd = balanceSheet is null;
+            balanceSheet = mapper.Map<BalanceSheet>(balanceSheet2);
+            balanceSheet.LastUpdated = DateTimeOffset.UtcNow;
+            if (shouldAdd)
+            {
+                repository.AddEntity(balanceSheet);
+            }
+
+            repository.SaveAll();
+            return Ok(balanceSheet);
         }
 
         [HttpGet("{symbol}/profile")]
@@ -340,6 +375,7 @@ namespace InvestingOak.Controllers
 
             return Ok(priceTarget);
         }
+
 
         [HttpGet("{symbol}/quote")]
         public ActionResult Quote(string symbol)
