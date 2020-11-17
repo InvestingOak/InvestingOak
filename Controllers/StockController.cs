@@ -136,6 +136,41 @@ namespace InvestingOak.Controllers
             repository.SaveAll();
             return Ok(balanceSheet);
         }
+        [HttpGet("{symbol}/CashFlow")]
+        public ActionResult BalanceSheet(string symbol)
+        {
+            symbol = symbol.ToUpperInvariant();
+            CashFlow cashFlow= repository.GetCashFlow(symbol);
+
+            if (cashFlow is not null && !cashFlow.IsStale(1440))
+            {
+                return Ok(cashFlow);
+            }
+            var parameters =
+                $"https://www.alphavantage.co/query?function=CASH_FLOW&symbol={symbol}&apikey={alphaVantageKey}";
+            HttpResponseMessage response = alphaVantageClient.GetAsync(parameters).Result;
+            if (!response.IsSuccessStatusCode)
+            {
+                return BadRequest($"Status code: {response.StatusCode}");
+            }
+            CashFlow2 cashFlow2 = response.Content.ReadFromJsonAsync<CashFlow2>(serializerOptions).Result;
+            if (cashFlow2?.Symbol is null)
+            {
+                return BadRequest("Symbol is invalid or failed to get cash flow");
+            }
+
+            bool shouldAdd = cashFlow is null;
+            cashFlow = mapper.Map<CashFlow>(cashFlow2);
+            balanceSheet.LastUpdated = DateTimeOffset.UtcNow;
+            if (shouldAdd)
+            {
+                repository.AddEntity(CashFlow);
+            }
+
+            repository.SaveAll();
+            return Ok(cashFlow);
+        }
+
 
         [HttpGet("{symbol}/profile")]
         public ActionResult Profile(string symbol)
